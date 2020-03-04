@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<optional>provide</optional>
 		</dependency>
 		
 		<!-- 스프링부트 기본 -->		
