@@ -20,3 +20,9 @@
   -DB 세팅
   -서버 작동하는지 확인
   -git commit -> git push
+ - list.jsp 추가
+ - ArticleService, ArticleServiceImp, ArticleDto 생성
+ - 하드코딩으로 데이터 생성하여 리턴(중간확인용)
+ - 컨트롤러가 받은 list 데이터를 jsp로 넘겨줌
+ - 이제 Dao를 통해서 가져오도록 처리 
+  
