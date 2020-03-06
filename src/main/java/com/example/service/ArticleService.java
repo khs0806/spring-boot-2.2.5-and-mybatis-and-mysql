@@ -8,6 +8,6 @@ import com.example.model.Article;
 public interface ArticleService {
 	public List<Article> getList();
 	
-	public void add(Map<String, Object> param); 
+	public long add(Map<String, Object> param); 
 	
 }
