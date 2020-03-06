@@ -6,4 +6,5 @@ import com.example.model.Article;
 
 public interface ArticleService {
 	public List<Article> getList(); 
+	
 }

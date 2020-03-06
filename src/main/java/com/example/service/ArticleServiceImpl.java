@@ -18,7 +18,7 @@ public class ArticleServiceImpl implements ArticleService {
 	ArticleDao articleDao;
 
 	public List<Article> getList() {
-		return articleDao.getList();
+		return articleDao.getList();	
   	}
 	
 	

@@ -25,8 +25,13 @@ public class ArticleController {
 		List<Article> list = articleService.getList();
 //		log.info("list: "+list); 콘솔에 로그 띄어줌
 		model.addAttribute("list", list);
-		
 
 		return "article/list";
+	}
+	
+	@RequestMapping("/article/add")
+	public String showAdd() {
+	
+		return "article/add";
 	}
 }
