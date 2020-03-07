@@ -7,14 +7,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="/resource/common.css">
 <meta charset="EUC-KR">
 <title>스프링 부트 게시판</title>
-<style>
-.con {
-	width: 500px;
-	margin: 0 auto;
-}
-</style>
 </head>
 <body>
 	<h1 class="con">게시물 상세 페이지</h1>
@@ -29,7 +24,8 @@
 		<a href="./list">게시물리스트</a>
 		<a href="./add">게시물 추가</a>
 		<a href="./modify?id=${article.id}">게시물 수정</a>
-		<a onclick="if (confirm('삭제 하시겠습니까?') == false) return false;" href="./doDelete?id=${article.id}">게시물 삭제</a>
+		<a onclick="if (confirm('삭제 하시겠습니까?') == false) return false;" 
+		href="./doDelete?id=${article.id}">게시물 삭제</a>
 	</div>
 
 </body>

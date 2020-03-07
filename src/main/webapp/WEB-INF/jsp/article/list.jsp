@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="/resource/common.css">
 <meta charset="EUC-KR">
 <title>스프링 부트 게시판</title>
 </head>
