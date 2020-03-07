@@ -26,4 +26,9 @@
 		title = #{title},
 		body = #{body}
 	</insert>
+	
+	<delete id="delete" parameterType="long" >
+		DELETE FROM article
+		WHERE id = #{id}
+	</delete>
 </mapper>
