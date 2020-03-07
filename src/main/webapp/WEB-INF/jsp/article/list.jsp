@@ -1,32 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@page import="com.example.model.Article"%>
-<%@page import="java.util.*"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/resource/common.css">
-<meta charset="EUC-KR">
-<title>½ºÇÁ¸µ ºÎÆ® °Ô½ÃÆÇ</title>
-</head>
-<body>
-	<h1 class="con">°Ô½Ã¹° ¸®½ºÆ®</h1>
-	<h3 class="con">ÀüÃ¼ °Ô½Ã¹° ¼ö : ${totalCount}</h3>
-	
-	<div class="btns con">
-	<a href="./add">°Ô½Ã¹° Ãß°¡</a>
-	</div>
-	
-	<div class="con">
+<c:set var="pageName" value="ê²Œì‹œë¬¼ ë¦¬ìŠ¤íŠ¸" />
+<%@ include file="../part/head.jspf"%>
+
+<h3 class="con">ì „ì²´ ê²Œì‹œë¬¼ ìˆ˜ : ${totalCount}</h3>
+
+<div class="btns con">
+	<a href="./add">ê²Œì‹œë¬¼ ì¶”ê°€</a>
+</div>
+
+<div class="con">
 	<c:forEach items="${list}" var="article">
 		<section>
-				<a href="./detail?id=${article.id}">¹øÈ£ : ${article.id}, Á¦¸ñ : ${article.title}</a>
+			<a href="./detail?id=${article.id}">ë²ˆí˜¸ : ${article.id}, ì œëª© :
+				${article.title}</a>
 		</section>
 		<hr>
 	</c:forEach>
-	</div>
+</div>
 
-</body>
-</html>
+<%@ include file="../part/foot.jspf"%>

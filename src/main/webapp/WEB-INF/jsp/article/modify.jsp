@@ -1,69 +1,58 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@page import="com.example.model.Article"%>
-<%@page import="java.util.*"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/resource/common.css">
-<meta charset="EUC-KR">
-<title>½ºÇÁ¸µ ºÎÆ® °Ô½ÃÆÇ</title>
-</head>
-<body>
-	<h1 class="con">°Ô½Ã¹° ¼öÁ¤</h1>
+<c:set var="pageName" value="ê²Œì‹œë¬¼ ìˆ˜ì •" />
+<%@ include file="../part/head.jspf"%>
 
-	<script>
+<script>
 		function submitModifyForm(form) {
 			form.title.value = form.title.value.trim();
 			if (form.title.value.length == 0) {
-				alert('Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.');
+				alert('ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.');
 				form.title.focus();
 				return false;
 			}
 			form.body.value = form.body.value.trim();
 			if (form.body.value.length == 0) {
-				alert('³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.');
+				alert('ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.');
 				form.body.focus();
 				return false;
 			}
 			form.submit();
 		}
 	</script>
-	
-	<form class="con common-form" action="./doModify" method="POST"
-		onsubmit="submitModifyForm(this); return false;">
-		<input type="hidden" name="id" value="${article.id}">
-		<div>
-			<span> Á¦¸ñ </span>
-			<div>
-				<input name="title" type="text" placeholder="Á¦¸ñ"
-					autofocus="autofocus" value="${article.title}">
-			</div>
-		</div>
 
+<form class="con common-form" action="./doModify" method="POST"
+	onsubmit="submitModifyForm(this); return false;">
+	<input type="hidden" name="id" value="${article.id}">
+	<div>
+		<span> ì œëª© </span>
 		<div>
-			<span> ³»¿ë </span>
-			<div>
-				<textarea name="body" placeholder="³»¿ë">${article.body}</textarea>
-			</div>
+			<input name="title" type="text" placeholder="ì œëª©"
+				autofocus="autofocus" value="${article.title}">
 		</div>
-
-		<div>
-			<span> ¼öÁ¤ </span>
-			<div>
-				<input type="submit" value="¼öÁ¤"> <input type="reset"
-					value="Ãë¼Ò" onclick="history.back();">
-			</div>
-		</div>
-	</form>
-	
-	<div class="btns con">
-		<a href="./list">°Ô½Ã¹° ¸®½ºÆ®</a> <a href="./add">°Ô½Ã¹° Ãß°¡</a> <a
-			onclick="if ( confirm('»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?') == false ) return false;"
-			href="./doDelete?id=${article.id}">°Ô½Ã¹° »èÁ¦</a>
 	</div>
 
-</body>
-</html>
+	<div>
+		<span> ë‚´ìš© </span>
+		<div>
+			<textarea name="body" placeholder="ë‚´ìš©">${article.body}</textarea>
+		</div>
+	</div>
+
+	<div>
+		<span> ìˆ˜ì • </span>
+		<div>
+			<input type="submit" value="ìˆ˜ì •"> <input type="reset"
+				value="ì·¨ì†Œ" onclick="history.back();">
+		</div>
+	</div>
+</form>
+
+<div class="btns con">
+	<a href="./list">ê²Œì‹œë¬¼ ë¦¬ìŠ¤íŠ¸</a> <a href="./add">ê²Œì‹œë¬¼ ì¶”ê°€</a> <a
+		onclick="if ( confirm('ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?') == false ) return false;"
+		href="./doDelete?id=${article.id}">ê²Œì‹œë¬¼ ì‚­ì œ</a>
+</div>
+<%@ include file="../part/foot.jspf"%>

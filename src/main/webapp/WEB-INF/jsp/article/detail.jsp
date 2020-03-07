@@ -1,32 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@page import="com.example.model.Article"%>
-<%@page import="java.util.*"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/resource/common.css">
-<meta charset="EUC-KR">
-<title>½ºÇÁ¸µ ºÎÆ® °Ô½ÃÆÇ</title>
-</head>
-<body>
-	<h1 class="con">°Ô½Ã¹° »ó¼¼ ÆäÀÌÁö</h1>
-	
-	<section class="con">
-		¹øÈ£ : ${article.getId()}<br>
-		Á¦¸ñ : ${article.title}<br>
-		³»¿ë : ${article.body}
-	</section>
-	
-	<div class="btns con">
-		<a href="./list">°Ô½Ã¹°¸®½ºÆ®</a>
-		<a href="./add">°Ô½Ã¹° Ãß°¡</a>
-		<a href="./modify?id=${article.id}">°Ô½Ã¹° ¼öÁ¤</a>
-		<a onclick="if (confirm('»èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?') == false) return false;" 
-		href="./doDelete?id=${article.id}">°Ô½Ã¹° »èÁ¦</a>
-	</div>
+<c:set var="pageName" value="ê²Œì‹œë¬¼ ìƒì„¸íŽ˜ì´ì§€" />
+<%@ include file="../part/head.jspf"%>
 
-</body>
-</html>
+<section class="con">
+	ë²ˆí˜¸ : ${article.getId()}<br> ì œëª© : ${article.title}<br> ë‚´ìš© :
+	${article.body}
+</section>
+
+<div class="btns con">
+	<a href="./list">ê²Œì‹œë¬¼ë¦¬ìŠ¤íŠ¸</a> <a href="./add">ê²Œì‹œë¬¼ ì¶”ê°€</a> <a
+		href="./modify?id=${article.id}">ê²Œì‹œë¬¼ ìˆ˜ì •</a> <a
+		onclick="if (confirm('ì‚­ì œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?') == false) return false;"
+		href="./doDelete?id=${article.id}">ê²Œì‹œë¬¼ ì‚­ì œ</a>
+</div>
+
+<%@ include file="../part/foot.jspf"%>
