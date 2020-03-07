@@ -6,8 +6,9 @@ import java.util.Map;
 import com.example.model.Article;
 
 public interface ArticleService {
-	public List<Article> getList();
 	
-	public long add(Map<String, Object> param); 
+	public List<Article> getList();
+	public long add(Map<String, Object> param);
+	public int getTotalCount(); 
 	
 }

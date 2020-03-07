@@ -28,9 +28,15 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public long add(Map<String, Object> param) {
 		articleDao.add(param);
-		 
 		
 		return CUtil.getAsLong(param.get("id"));
 	}
+
+	@Override
+	public int getTotalCount() {
+		return articleDao.getTotalCount();
+	}
+	
+	
 	
 }

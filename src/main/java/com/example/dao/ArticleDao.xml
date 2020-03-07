@@ -6,6 +6,11 @@
 		SELECT *
 		FROM article
 	</select>
+	
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+	</select>
 
 	<insert id="add" parameterType="map" useGeneratedKeys="true"
 		keyProperty="id">
@@ -15,4 +20,3 @@
 		body = #{body}
 	</insert>
 </mapper>
-
