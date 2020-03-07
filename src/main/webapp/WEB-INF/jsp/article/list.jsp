@@ -12,16 +12,21 @@
 <title>스프링 부트 게시판</title>
 </head>
 <body>
-	<h1>게시물 리스트</h1>
-	<h3>전체 게시물 수 : ${totalCount}</h3>
+	<h1 class="con">게시물 리스트</h1>
+	<h3 class="con">전체 게시물 수 : ${totalCount}</h3>
+	
+	<div class="btns con">
 	<a href="./add">게시물 추가</a>
+	</div>
+	
+	<div class="con">
 	<c:forEach items="${list}" var="article">
 		<section>
-			번호 : ${article.getId()},
-			제목 : ${article.title}
+				<a href="./detail?id=${article.id}">번호 : ${article.id}, 제목 : ${article.title}</a>
 		</section>
 		<hr>
 	</c:forEach>
+	</div>
 
 </body>
 </html>

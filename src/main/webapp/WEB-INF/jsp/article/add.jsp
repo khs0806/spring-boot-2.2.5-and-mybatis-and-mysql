@@ -9,7 +9,7 @@
 <title>커뮤니티 사이트 - 게시물 작성</title>
 </head>
 <body>
-	<h1>게시물 작성</h1>
+	<h1 class="con">게시물 작성</h1>
 
 	<script>
 		function submitAddForm(form) {
