@@ -13,6 +13,7 @@
 <body>
 	<h1>게시물 리스트</h1>
 	<h3>전체 게시물 수 : ${totalCount}</h3>
+	<a href="./add">게시물 추가</a>
 	<c:forEach items="${list}" var="article">
 		<section>
 			번호 : ${article.getId()},
@@ -20,5 +21,6 @@
 		</section>
 		<hr>
 	</c:forEach>
+
 </body>
 </html>

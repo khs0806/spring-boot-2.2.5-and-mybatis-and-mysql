@@ -7,10 +7,17 @@
 		FROM article
 	</select>
 	
+	<select id="getOne" parameterType="long" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE id = #{id}
+	</select>
+	
 	<select id="getTotalCount" parameterType="map" resultType="int">
 		SELECT COUNT(*)
 		FROM article
 	</select>
+	
 
 	<insert id="add" parameterType="map" useGeneratedKeys="true"
 		keyProperty="id">

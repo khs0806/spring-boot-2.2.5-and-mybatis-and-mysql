@@ -23,11 +23,18 @@ public class ArticleController {
 	@Autowired
 	ArticleService articleService;
 	
+	@RequestMapping("/article/detail")
+	public String showDetail(Model model, long id) {
+		Article article = articleService.getOne(id);
+		model.addAttribute("article", article);
+		
+		return "article/detail";
+	}
+	
 	@RequestMapping("/article/list")
 	public String showList(Model model) {
 		List<Article> list = articleService.getList();
 		int totalCount = articleService.getTotalCount();
-//		log.info("list: "+list); 콘솔에 로그 띄어줌
 		model.addAttribute("list", list);
 		model.addAttribute("totalCount", totalCount);
 
