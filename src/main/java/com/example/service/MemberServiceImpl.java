@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.MemberDao;
+import com.example.model.Member;
 import com.example.util.CUtil;
 
 
@@ -64,5 +65,16 @@ public class MemberServiceImpl implements MemberService{
 
 		return rs;
 	}
+
+	@Override
+	public Member getMatchedOne(String loginId, String loginPw) {
+		
+		return memberDao.getMatchedOne(loginId, loginPw);
+	}
 	
+	@Override
+	public Member getOne(long loginedMemberId) {
+		
+		return memberDao.getOne(loginedMemberId);
+	}
 }
