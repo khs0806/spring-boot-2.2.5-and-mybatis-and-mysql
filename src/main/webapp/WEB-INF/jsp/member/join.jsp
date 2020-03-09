@@ -68,8 +68,4 @@
 	</div>
 </form>
 
-<div class="btns con">
-	<a href="/">메인</a>
-</div>
-
 <%@ include file="../part/foot.jspf"%>
