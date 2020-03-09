@@ -10,9 +10,4 @@
 </c:if>
 
 
-<div class="btns con">
-	<a href="/">메인</a>
-	<a href="/member/join">가입</a>
-	<a href="/member/login">로그인</a>
-</div>
 <%@ include file="../part/foot.jspf"%>
