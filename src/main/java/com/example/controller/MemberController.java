@@ -37,7 +37,8 @@ public class MemberController {
 	
 	@RequestMapping("/member/doLogin")
 	public String doLogin(@RequestParam Map<String, Object> param, Model model, HttpSession session) {
-
+		
+		//로그인 아이디 비밀번호가 일치하는지 체크
 		Member matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
 				(String) param.get("loginPw"));
 		

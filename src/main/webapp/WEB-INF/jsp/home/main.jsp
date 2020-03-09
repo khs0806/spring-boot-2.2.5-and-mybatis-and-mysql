@@ -9,6 +9,7 @@
 	<div class="con">회원 로그인 ID : ${loginedMember.loginId}</div>
 </c:if>
 
+
 <div class="btns con">
 	<a href="/">메인</a>
 	<a href="/member/join">가입</a>
