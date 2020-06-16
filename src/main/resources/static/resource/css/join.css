@@ -1,0 +1,31 @@
+@charset "UTF-8";
+.navbar {
+    max-width: 840px;
+    margin: 40px auto 0px;
+    border-radius: 20px 20px 0px 0px;
+	background-color: #60c7c1!important;
+}
+
+.join-name {
+	margin: 0 auto;
+    width: 200px;
+    text-align: center;
+}
+
+.container {
+    max-width:840px;	
+	background-color: beige;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.container > h3 {
+	margin: 0px auto;
+}
+
+.form-group {
+	margin: auto 100px;
+}
+
+.joinForm > .button {
+    margin: 30px 70px 30px 170px;
+}

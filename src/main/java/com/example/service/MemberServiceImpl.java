@@ -44,8 +44,9 @@ public class MemberServiceImpl implements MemberService{
 	public Map<String, Object> join(Map<String, Object> param) {
 		memberDao.join(param);
 
-		long newId = CUtil.getAsLong(param.get("id"));
-
+		System.out.println(param.toString());
+//		long newId = CUtil.getAsLong(param.get("id"));
+		long newId = 1;
 		String resultCode = "";
 		String msg = "";
 
@@ -73,7 +74,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public Member getOne(long loginedMemberId) {
+	public Member getOne(String loginedMemberId) {
 		
 		return memberDao.getOne(loginedMemberId);
 	}

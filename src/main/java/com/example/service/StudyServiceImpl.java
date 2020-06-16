@@ -7,57 +7,55 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.dao.ArticleDao;
-import com.example.model.Article;
+import com.example.dao.StudyDao;
+import com.example.model.Study;
 import com.example.util.CUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class ArticleServiceImpl implements ArticleService {
+public class StudyServiceImpl implements StudyService {
+	
 	// 이제 ArticleService 데이터 관련 모두를 Dao에게 위임
 	@Autowired
-	ArticleDao articleDao;
+	StudyDao studyDao;
 	
 	@Override
-	public List<Article> getList() {
-		return articleDao.getList();	
+	public List<Study> getList() {
+		return studyDao.getList();	
   	}
 	
 	@Override
 	public long add(Map<String, Object> param) {
-		articleDao.add(param);
+		studyDao.add(param);
 		
 		return CUtil.getAsLong(param.get("id"));
 	}
 
 	@Override
 	public int getTotalCount() {
-		return articleDao.getTotalCount();
+		return studyDao.getTotalCount();
 	}
 
 	@Override
-	public Article getOne(long id) {
+	public Study getOne(long id) {
 		
-		return articleDao.getOne(id);
+		return studyDao.getOne(id);
 	}
 
 	@Override
 	public void delete(long id) {
-		articleDao.delete(id);
+		studyDao.delete(id);
 	}
 
 	@Override
 	public void modify(Map<String, Object> param) {
-		articleDao.modify(param);
+		studyDao.modify(param);
 	}
 
 	@Override
 	public void hitUp(long id) {
-		articleDao.hitUp(id);
+		studyDao.hitUp(id);
 	}
-	
-	
-	
 }

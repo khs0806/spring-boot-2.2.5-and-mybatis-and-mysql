@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.dao.ArticleDao">
+<mapper namespace="com.example.dao.StudyDao">
 	<select id="getList" parameterType="map" resultType="Article">
 		SELECT *
-		FROM article
+		FROM board
 	</select>
 	
 	<select id="getOne" parameterType="long" resultType="Article">
 		SELECT *
-		FROM article
+		FROM board
 		WHERE id = #{id}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
 		SELECT COUNT(*)
-		FROM article
+		FROM board
 	</select>
 	
 
 	<insert id="add" parameterType="map" useGeneratedKeys="true"
 		keyProperty="id">
-		INSERT INTO article
-		SET regDate = NOW(),
+		INSERT INTO study
+		value regDate = NOW(),
 		title = #{title},
-		body = #{body}
+		body = #{body},
+		hit = 0
+		
+		insert into study 
+		values(1, 'boydsa', '3', '4', '5', '6', sysdate, sysdate, sysdate, '10');
 	</insert>
 	
 	<update id="modify" parameterType="map">

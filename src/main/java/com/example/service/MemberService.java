@@ -12,7 +12,7 @@ public interface MemberService {
 
 	public Member getMatchedOne(String loginId, String loginPw);
 
-	public Member getOne(long loginedMemberId);
+	public Member getOne(String loginedMemberId);
 
 	
 }

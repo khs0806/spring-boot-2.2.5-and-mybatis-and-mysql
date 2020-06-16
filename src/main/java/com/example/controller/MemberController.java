@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.model.Member;
 import com.example.service.MemberService;
@@ -37,7 +36,8 @@ public class MemberController {
 	
 	@RequestMapping("/member/doLogin")
 	public String doLogin(@RequestParam Map<String, Object> param, Model model, HttpSession session) {
-		
+		System.out.println((String) param.get("loginId")+ ", "+
+				(String) param.get("loginPw"));
 		//로그인 아이디 비밀번호가 일치하는지 체크
 		Member matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
 				(String) param.get("loginPw"));
@@ -47,6 +47,7 @@ public class MemberController {
 			model.addAttribute("historyBack", true);
 			return "common/redirect";
 		}
+		System.out.println("session : " + matchedMember.getId());
 		session.setAttribute("loginedMemberId", matchedMember.getId());
 		
 		model.addAttribute("alertMsg", "로그인 되었습니다.");
@@ -63,8 +64,8 @@ public class MemberController {
 	
 	@RequestMapping("/member/doJoin")
 	public String doJoin(@RequestParam Map<String,Object> param, Model model) {
-		
-		Map<String,Object> checkLoginIdDupRs = memberService.checkLoginIdDup((String)param.get("loginId"));
+		System.out.println("param"+param.toString());
+		Map<String,Object> checkLoginIdDupRs = memberService.checkLoginIdDup((String)param.get("id"));
 		
 		// 로그인 ID의 중복성 체크
 		if (((String)checkLoginIdDupRs.get("resultCode")).startsWith("F-")) {

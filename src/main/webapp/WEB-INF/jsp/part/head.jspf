@@ -5,28 +5,63 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>김현수 사이트 - ${pageName}</title>
-<link rel="stylesheet" href="/resource/common.css">
-
+<title>스터디엠에 오신 걸 환영합니다</title>
+<link rel="stylesheet" href="/resource/css/common.css">
+<link rel="stylesheet" href="/resource/css/login.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+		function submitJoinForm(form) {
+			
+			form.loginId.value = form.loginId.value.trim();
+			if (form.loginId.value.length == 0) {
+				alert('아이디를 입력해주세요.');
+				form.loginId.focus();
+				return false;
+			}
+			
+			form.loginPw.value = form.loginPw.value.trim();
+			if (form.loginPw.value.length == 0) {
+				alert('패스워드를 입력해주세요.');
+				form.loginPw.focus();
+				return false;
+			}
+			
+			form.submit();
+		}
+	</script>
 </head>
 <body>
-	<h1 class="con">${pageName}</h1>
-
-	<div class="top-menu-1 con">
-		<a href="/home/main">메인</a>
-
-		<c:if test="${isLogined}">
-			<a href="/member/doLogout">로그아웃</a>
-		</c:if>
-
-		<c:if test="${isLogined == false}">
-			<a href="/member/login">로그인</a>
-			<a href="/member/join">가입</a>
-		</c:if>
-
-		<a href="/article/list">게시물 리스트</a>
-
-		<c:if test="${isLogined}">
-			<a href="/article/add">게시물 작성</a>
-		</c:if>
+<!-- Modal HTML -->
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="avatar">
+						<img src="/resource/img/rank1.jpg" alt="Avatar">
+					</div>				
+					<h4 class="modal-title">로그인</h4>	
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form action="/member/doLogin" method="POST" onsubmit="submitLoginForm(this); return false;">
+						<div class="form-group">
+							<input type="text" class="form-control" name="loginId" placeholder="아이디" required="required">		
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="loginPw" placeholder="비밀번호" required="required">	
+						</div>        
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary btn-lg btn-block login-btn" value="로그인"/>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<a href="/member/join">회원가입</a>
+				</div>
+			</div>
+		</div>
 	</div>

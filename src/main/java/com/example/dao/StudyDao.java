@@ -5,17 +5,17 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.model.Article;
+import com.example.model.Study;
 
 @Mapper //이 어노테이션으로 ArticleAdo의 구현체를 마이바티스가 대신 구현.
-public interface ArticleDao {
-	public List<Article> getList();
+public interface StudyDao {
+	public List<Study> getList();
 
 	public void add(Map<String, Object> param);
 
 	public int getTotalCount();
 
-	public Article getOne(long id);
+	public Study getOne(long id);
 
 	public void delete(long id);
 

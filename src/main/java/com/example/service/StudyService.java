@@ -3,17 +3,17 @@ package com.example.service;
 import java.util.List;
 import java.util.Map;
 
-import com.example.model.Article;
+import com.example.model.Study;
 
-public interface ArticleService {
+public interface StudyService {
 	
-	public List<Article> getList();
+	public List<Study> getList();
 	
 	public long add(Map<String, Object> param);
 	
 	public int getTotalCount();
 	
-	public Article getOne(long id);
+	public Study getOne(long id);
 
 	public void delete(long id);
 
