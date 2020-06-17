@@ -36,8 +36,6 @@ public class MemberController {
 	
 	@RequestMapping("/member/doLogin")
 	public String doLogin(@RequestParam Map<String, Object> param, Model model, HttpSession session) {
-		System.out.println((String) param.get("loginId")+ ", "+
-				(String) param.get("loginPw"));
 		//로그인 아이디 비밀번호가 일치하는지 체크
 		Member matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
 				(String) param.get("loginPw"));
@@ -47,7 +45,6 @@ public class MemberController {
 			model.addAttribute("historyBack", true);
 			return "common/redirect";
 		}
-		System.out.println("session : " + matchedMember.getId());
 		session.setAttribute("loginedMemberId", matchedMember.getId());
 		
 		model.addAttribute("alertMsg", "로그인 되었습니다.");

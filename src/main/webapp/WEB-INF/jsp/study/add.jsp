@@ -54,39 +54,64 @@
 	<div class="container">
 	<br>
 	<div class="join-name">
-		<h3>회원가입</h3><br>
+		<h3>스터디 등록</h3><br>
 	</div>
-	<form action="./doJoin" class="joinForm con common-form" method="POST"
-		onsubmit="submitJoinForm(this); return false;">
+	<form action="./doAdd" class="joinForm con common-form" method="POST"
+ 		onsubmit="submitJoinForm(this); return false;"> 
+ 		<input type="hidden" id="id" name="id" value="${loginedMemberId}"/>
+<!-- 		<div class="form-group"> -->
+<!-- 			<label for="userId">아이디</label><input -->
+<!-- 				type="text" class="form-control" id="userId" name="id" -->
+<!-- 				aria-describedby="userId"> -->
+<!-- 		</div> -->
 		<div class="form-group">
-			<label for="userId">아이디</label><input
-				type="text" class="form-control" id="userId" name="id"
-				aria-describedby="userId">
+			<label for="sname">스터디 제목</label> <input
+				type="text" name="sname"
+				class="form-control" id="sname">
 		</div>
 		<div class="form-group">
-			<label for="password">비밀번호</label> <input
-				type="password" name="pass"
-				class="form-control" id="password">
+			<label for="content">스터디 내용</label> <textarea
+				name="content" class="form-control" 
+				id="content" aria-describedby="name"></textarea>
 		</div>
 		<div class="form-group">
-			<label for="name">비밀번호 확인</label> <input
-				type="password" name="passConfirm" 
-				class="form-control" id="password"
+			<label for="mname">스터디장 닉네임</label> <input
+				type="text" name="mname"
+				class="form-control" id="mname"
 				aria-describedby="name">
 		</div>
 		<div class="form-group">
-			<label for="name">닉네임 입력</label> <input
-				type="text" name="name"
-				class="form-control" id="name"
+			<label for="location">스터디 지역</label> <input
+				type="text" name="location"
+				class="form-control" id="location"
 				aria-describedby="name">
 		</div>
 		<div class="form-group">
-			<label for="name">이메일 입력</label> <input
-				type="text" name="email"
-				class="form-control" id="name"
+			<label for="totime">시작 날짜</label>
+			<p><input type="date" id="totime" name="totime"></p>
+<!-- 			<input type="text" class="form-control" id="totime" name="totime" -->
+<!-- 				aria-describedby="userId"> -->
+		</div>
+		<div class="form-group">
+			<label for="fromtime">종료 날짜</label> 
+			<p><input type="date"  id="fromtime" name="fromtime"></p>
+<!-- 			<input type="text" name="fromtime" -->
+<!-- 				class="form-control" id="fromtime"> -->
+		</div>
+		<div class="form-group">
+			<label for="sdate">스터디 시간</label> 
+			<input type="time" id="sdate" name="sdate">
+<!-- 			<input type="text" name="sdate"  -->
+<!-- 				class="form-control" id="sdate" -->
+<!-- 				aria-describedby="name"> -->
+		</div>
+		<div class="form-group">
+			<label for="joincode">가입코드</label> <input
+				type="text" name="joincode"
+				class="form-control" id="joincode"
 				aria-describedby="name">
 		</div>
-		<input type="submit" value="가입하기" class="btn btn-primary button"/>
+		<input type="submit" value="등록하기" class="btn btn-primary button"/>
 		<input type="reset" value="취소" class="btn btn-primary button" onclick="history.back();"/>
 	</form>
 	</div>

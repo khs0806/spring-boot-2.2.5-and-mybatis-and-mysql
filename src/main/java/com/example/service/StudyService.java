@@ -9,7 +9,7 @@ public interface StudyService {
 	
 	public List<Study> getList();
 	
-	public long add(Map<String, Object> param);
+	public String add(Study study);
 	
 	public int getTotalCount();
 	

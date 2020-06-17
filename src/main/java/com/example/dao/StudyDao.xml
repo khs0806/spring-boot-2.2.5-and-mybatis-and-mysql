@@ -2,33 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.dao.StudyDao">
-	<select id="getList" parameterType="map" resultType="Article">
-		SELECT *
-		FROM board
+	<select id="getList" resultType="study">
+		SELECT 
+				sno, id, sname, 
+				content, mname, location, 
+				to_char(totime,'YY-MM-DD') as totime, 
+				to_char(fromtime,'YY-MM-DD') as fromtime, 
+				to_char(sdate,'hh:mm') as sdate, 
+				joincode 
+		FROM study
 	</select>
 	
-	<select id="getOne" parameterType="long" resultType="Article">
-		SELECT *
-		FROM board
-		WHERE id = #{id}
+	<select id="getOne" parameterType="long" resultType="Study">
+		SELECT  
+				sno, id, sname, 
+				content, mname, location, 
+				to_char(totime,'YY-MM-DD') as totime, 
+				to_char(fromtime,'YY-MM-DD') as fromtime, 
+				to_char(sdate,'hh:mm') as sdate, 
+				joincode
+		FROM study
+		WHERE sno = #{sno}
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
 		SELECT COUNT(*)
-		FROM board
+		FROM study
 	</select>
 	
 
-	<insert id="add" parameterType="map" useGeneratedKeys="true"
-		keyProperty="id">
-		INSERT INTO study
-		value regDate = NOW(),
-		title = #{title},
-		body = #{body},
-		hit = 0
-		
-		insert into study 
-		values(1, 'boydsa', '3', '4', '5', '6', sysdate, sysdate, sysdate, '10');
+	<insert id="add">
+		<selectKey keyProperty="sno" order="BEFORE" resultType="int">
+			select coalesce(max(sno+1),1) as sno from study
+		</selectKey>
+		insert into study (sno, id, sname, content, mname, location, totime, fromtime, sdate, joincode)
+		values 
+		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, #{sdate}, #{joincode})
 	</insert>
 	
 	<update id="modify" parameterType="map">

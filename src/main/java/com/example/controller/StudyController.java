@@ -3,6 +3,8 @@ package com.example.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +26,8 @@ public class StudyController {
 	StudyService studyService;
 	
 	@RequestMapping("/study/detail")
-	public String showDetail(Model model, long id) {
-		Study study = studyService.getOne(id);
-		studyService.hitUp(id);
+	public String showDetail(Model model, long sno) {
+		Study study = studyService.getOne(sno);
 		model.addAttribute("study", study);
 		
 		return "study/detail";
@@ -56,25 +57,26 @@ public class StudyController {
 		return "study/add";
 	}
 	
-	@RequestMapping("/study/doAdd")
 	@ResponseBody
-	public String doAdd(@RequestParam Map<String, Object> param) {
+	@RequestMapping("/study/doAdd")
+	public String doAdd(Study study) {
+		System.out.println(study.getSdate());
 		
-		long newId = studyService.add(param);
-		String msg = newId + "번 게시물이 추가되었습니다.";
+		String newId = studyService.add(study);
+		String msg = newId + "님의 스터디그룹이 추가되었습니다.";
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("alert('"  + msg + "');");
-		sb.append("location.replace('./detail?id=" + newId + "');");
+//		sb.append("location.replace('./detail?id=" + newId + "');");
+		sb.append("location.replace('./list');");
 		sb.insert(0, "<script>");
 		sb.append("</script>");
 
 		return sb.toString();
-		
 	}
 	
-	@RequestMapping("/study/doDelete")
 	@ResponseBody
+	@RequestMapping("/study/doDelete")
 	public String doDelete(long id) {
 		
 		studyService.delete(id);
@@ -90,8 +92,8 @@ public class StudyController {
 		
 	}
 	
-	@RequestMapping("/study/doModify")
 	@ResponseBody
+	@RequestMapping("/study/doModify")
 	public String doModify(@RequestParam Map<String, Object> param, long id) {
 		
 		studyService.modify(param);

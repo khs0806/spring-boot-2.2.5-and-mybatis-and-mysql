@@ -12,7 +12,7 @@
 			<a href="/home/main"><span style="margin-left:50px; color:green;"><b>스터디</b></span><span style="color: red;"><b>엠</b></span></a>
 			<ul>
 				<li style="margin-left: 20px;"><a href="#">공지사항</a></li>
-				<li><a href="/article/list">스터디게시판</a></li>
+				<li><a href="/study/list">스터디게시판</a></li>
 				<c:if test="${isLogined == false}">				
 					<li style="float: right; margin-right: 30px;">
 						<a href="/member/join">회원가입</a>

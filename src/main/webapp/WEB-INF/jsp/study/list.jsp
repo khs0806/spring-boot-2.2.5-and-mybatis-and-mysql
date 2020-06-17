@@ -8,16 +8,18 @@
 <h3 class="con">전체 게시물 수 : ${totalCount}</h3>
 
 <div class="btns con">
-	<a href="./add">게시물 추가</a>
+	<a href="./add">스터디 등록</a>
+	<a href="/">홈으로</a>
 </div>
 
 <div class="con">
-	<c:forEach items="${list}" var="article">
+	<c:forEach items="${list}" var="study">
 		<section>
-			번호 : ${article.id}<br>
-			<a href="./detail?id=${article.id}">
-			제목 : ${article.title}</a>
-			조회수 : ${article.hit}
+			스터디장 : ${study.id}<br>
+			<a href="./detail?sno=${study.sno}">
+			스터디 이름 : ${study.sname}</a>
+			스터디 장소 : ${study.location}
+			스터디 시간 : ${study.sdate}
 		</section>
 		<hr>
 	</c:forEach>

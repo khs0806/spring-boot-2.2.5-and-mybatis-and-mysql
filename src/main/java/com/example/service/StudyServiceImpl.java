@@ -1,6 +1,5 @@
 package com.example.service;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StudyServiceImpl implements StudyService {
 	
-	// 이제 ArticleService 데이터 관련 모두를 Dao에게 위임
+	// 이제 StudyService 데이터 관련 모두를 Dao에게 위임
 	@Autowired
 	StudyDao studyDao;
 	
@@ -27,10 +26,10 @@ public class StudyServiceImpl implements StudyService {
   	}
 	
 	@Override
-	public long add(Map<String, Object> param) {
-		studyDao.add(param);
-		
-		return CUtil.getAsLong(param.get("id"));
+	public String add(Study study) {
+		studyDao.add(study);
+		String id = (String) study.getId();
+		return id;
 	}
 
 	@Override
