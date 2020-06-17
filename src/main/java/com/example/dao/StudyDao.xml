@@ -37,7 +37,7 @@
 		</selectKey>
 		insert into study (sno, id, sname, content, mname, location, totime, fromtime, sdate, joincode)
 		values 
-		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, #{sdate}, #{joincode})
+		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, to_date(#{sdate}, 'hh:mm'), #{joincode})
 	</insert>
 	
 	<update id="modify" parameterType="map">
