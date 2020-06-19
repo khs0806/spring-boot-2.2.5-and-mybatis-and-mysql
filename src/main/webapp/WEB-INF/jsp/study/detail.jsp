@@ -12,8 +12,15 @@
 	스터디장 : ${study.mname}<br> 
 	시작날짜 : ${study.totime}<br> 
 	종료날짜 : ${study.fromtime}<br> 
-	스터디 시간 : ${study.sdate}<br> 
+	스터디 시작시간 : ${study.sdate}<br><br>
 </section>
+
+    <section class="con">
+        <span>스터디 회원</span>
+		<c:forEach items="${memberList}" var="list">
+    		<p>${list.id }</p>
+		</c:forEach>
+	</section>
 
 <div class="btns con">
 	<a href="./list">게시물리스트</a> <a href="./add">게시물 추가</a> <a

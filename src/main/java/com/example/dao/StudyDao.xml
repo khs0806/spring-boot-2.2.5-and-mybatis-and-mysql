@@ -8,9 +8,15 @@
 				content, mname, location, 
 				to_char(totime,'YY-MM-DD') as totime, 
 				to_char(fromtime,'YY-MM-DD') as fromtime, 
-				to_char(sdate,'hh:mm') as sdate, 
+				to_char(sdate,'hh24:mi') as sdate, 
 				joincode 
 		FROM study
+	</select>
+	
+	<select id="getMemberList" resultType="study">
+		SELECT *
+		FROM studymember
+		where sno = #{sno}
 	</select>
 	
 	<select id="getOne" parameterType="long" resultType="Study">
@@ -19,7 +25,7 @@
 				content, mname, location, 
 				to_char(totime,'YY-MM-DD') as totime, 
 				to_char(fromtime,'YY-MM-DD') as fromtime, 
-				to_char(sdate,'hh:mm') as sdate, 
+				to_char(sdate,'hh24:mi') as sdate, 
 				joincode
 		FROM study
 		WHERE sno = #{sno}
@@ -37,24 +43,32 @@
 		</selectKey>
 		insert into study (sno, id, sname, content, mname, location, totime, fromtime, sdate, joincode)
 		values 
-		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, to_date(#{sdate}, 'hh:mm'), #{joincode})
+		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, to_date(#{sdate}, 'HH24:MI'), #{joincode})
 	</insert>
 	
-	<update id="modify" parameterType="map">
-		UPDATE article
+	<select id="getStudyNo" resultType="int">
+		select sno from study
+		where id = #{id} AND joincode = #{joincode}
+	</select>
+	
+	<update id="join">
+		<selectKey keyProperty="no" order="BEFORE" resultType="int">
+			select coalesce(max(no+1),1) as sno from studymember
+		</selectKey>
+		insert into studymember (no, sno, id, gdate)
+		values (#{no}, #{sno}, #{id}, sysdate)
+	</update>
+	
+	<update id="modify">
+		UPDATE study
 		SET title = #{title},
 		body = #{body}
 		WHERE id = #{id}
 	</update>
 	
-	<update id="hitUp" parameterType="long">
-		UPDATE article
-		SET hit = hit + 1
-		WHERE id = #{id}
-	</update>
 	
 	<delete id="delete" parameterType="long" >
-		DELETE FROM article
+		DELETE FROM study
 		WHERE id = #{id}
 	</delete>
 </mapper>

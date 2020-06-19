@@ -19,7 +19,7 @@
 			<a href="./detail?sno=${study.sno}">
 			스터디 이름 : ${study.sname}</a>
 			스터디 장소 : ${study.location}
-			스터디 시간 : ${study.sdate}
+			스터디 시작시간 : ${study.sdate}
 		</section>
 		<hr>
 	</c:forEach>

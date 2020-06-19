@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.dao.StudyDao;
 import com.example.model.Study;
+import com.example.model.StudyMember;
 import com.example.service.StudyService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,9 @@ public class StudyController {
 	@RequestMapping("/study/detail")
 	public String showDetail(Model model, long sno) {
 		Study study = studyService.getOne(sno);
+		List<StudyMember> memberList = studyService.getMemberList(sno);
 		model.addAttribute("study", study);
+		model.addAttribute("memberList", memberList);
 		
 		return "study/detail";
 	}
@@ -60,8 +64,7 @@ public class StudyController {
 	@ResponseBody
 	@RequestMapping("/study/doAdd")
 	public String doAdd(Study study) {
-		System.out.println(study.getSdate());
-		
+		System.out.println(study.toString());
 		String newId = studyService.add(study);
 		String msg = newId + "님의 스터디그룹이 추가되었습니다.";
 		StringBuilder sb = new StringBuilder();

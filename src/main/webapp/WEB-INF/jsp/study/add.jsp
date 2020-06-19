@@ -99,7 +99,7 @@
 <!-- 				class="form-control" id="fromtime"> -->
 		</div>
 		<div class="form-group">
-			<label for="sdate">스터디 시간</label> 
+			<label for="sdate">스터디 시작시간</label> 
 			<input type="time" id="sdate" name="sdate">
 <!-- 			<input type="text" name="sdate"  -->
 <!-- 				class="form-control" id="sdate" -->

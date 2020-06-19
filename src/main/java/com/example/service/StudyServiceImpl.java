@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.dao.StudyDao;
 import com.example.model.Study;
+import com.example.model.StudyMember;
 import com.example.util.CUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,22 @@ public class StudyServiceImpl implements StudyService {
 	
 	@Override
 	public String add(Study study) {
-		studyDao.add(study);
+		int result = studyDao.add(study);
+		int no = studyDao.getStudyNo(study);
+		if (result == 1) {
+			StudyMember studyMember = new StudyMember();
+			studyMember.setSno(no);
+			studyMember.setId(study.getId());
+			studyDao.join(studyMember);
+		}
 		String id = (String) study.getId();
 		return id;
+	}
+	
+	@Override
+	public List<StudyMember> getMemberList(long sno) {
+		List<StudyMember> studyList = studyDao.getMemberList(sno);
+		return studyList;
 	}
 
 	@Override
@@ -51,10 +65,5 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public void modify(Map<String, Object> param) {
 		studyDao.modify(param);
-	}
-
-	@Override
-	public void hitUp(long id) {
-		studyDao.hitUp(id);
 	}
 }
