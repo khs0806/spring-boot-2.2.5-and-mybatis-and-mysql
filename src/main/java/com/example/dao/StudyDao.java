@@ -14,11 +14,15 @@ public interface StudyDao {
 
 	public int add(Study study);
 
-	public void join(StudyMember studyMeber);
+	public void groupJoin(StudyMember studyMember);
+	
+	public int isJoin(StudyMember studyMember);
 	
 	public List<StudyMember> getMemberList(long sno);
 	
 	public int getStudyNo(Study study);
+	
+	public String getJoinCode(long sno);
 	
 	public int getTotalCount();
 

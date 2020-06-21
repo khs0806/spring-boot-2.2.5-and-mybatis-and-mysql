@@ -2,6 +2,7 @@ package com.example.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,17 +28,60 @@ public class StudyServiceImpl implements StudyService {
   	}
 	
 	@Override
-	public String add(Study study) {
+	public StudyMember add(Study study) {
+		
+		// 가입코드 생성 로직
+		StringBuffer temp = new StringBuffer();
+        Random rnd = new Random();
+        for (int i = 0; i < 6; i++) {
+            int rIndex = rnd.nextInt(3);
+            switch (rIndex) {
+            case 0:
+                // a-z
+                temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+                break;
+            case 1:
+                // A-Z
+                temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+                break;
+            case 2:
+                // 0-9
+                temp.append((rnd.nextInt(10)));
+                break;
+            }
+        }
+        
+		study.setJoincode(temp.toString());
 		int result = studyDao.add(study);
-		int no = studyDao.getStudyNo(study);
+		int sno = studyDao.getStudyNo(study);
+		StudyMember studyMember = new StudyMember();
 		if (result == 1) {
-			StudyMember studyMember = new StudyMember();
-			studyMember.setSno(no);
+			studyMember.setSno(sno);
 			studyMember.setId(study.getId());
-			studyDao.join(studyMember);
+			studyDao.groupJoin(studyMember);
 		}
-		String id = (String) study.getId();
-		return id;
+		return studyMember;
+	}
+	
+	@Override
+	public void groupJoin(StudyMember studyMember,String code) throws Exception {
+		long sno = studyMember.getSno();
+		String joincode = studyDao.getJoinCode(sno);
+		if (code.equals(joincode)) {
+			studyDao.groupJoin(studyMember);
+		} else {
+			throw new Exception("가입코드가 틀립니다");
+		}
+	}
+	
+	@Override
+	public boolean isJoin(StudyMember studyMember) {
+		int isGroup = studyDao.isJoin(studyMember);
+		boolean result = false;
+		if ( isGroup > 0 ) {
+			result = true;
+		}
+		return result;
 	}
 	
 	@Override

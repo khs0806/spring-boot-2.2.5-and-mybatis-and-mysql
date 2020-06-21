@@ -10,7 +10,11 @@ public interface StudyService {
 	
 	public List<Study> getList();
 	
-	public String add(Study study);
+	public StudyMember add(Study study);
+	
+	public void groupJoin(StudyMember studyMember,String code) throws Exception;
+	
+	public boolean isJoin(StudyMember studyMember);
 	
 	public List<StudyMember> getMemberList(long sno);
 	

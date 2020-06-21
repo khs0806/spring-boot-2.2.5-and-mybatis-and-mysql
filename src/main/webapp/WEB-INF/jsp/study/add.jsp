@@ -105,12 +105,6 @@
 <!-- 				class="form-control" id="sdate" -->
 <!-- 				aria-describedby="name"> -->
 		</div>
-		<div class="form-group">
-			<label for="joincode">가입코드</label> <input
-				type="text" name="joincode"
-				class="form-control" id="joincode"
-				aria-describedby="name">
-		</div>
 		<input type="submit" value="등록하기" class="btn btn-primary button"/>
 		<input type="reset" value="취소" class="btn btn-primary button" onclick="history.back();"/>
 	</form>

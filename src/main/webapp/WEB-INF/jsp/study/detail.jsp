@@ -23,10 +23,51 @@
 	</section>
 
 <div class="btns con">
-	<a href="./list">게시물리스트</a> <a href="./add">게시물 추가</a> <a
-		href="./modify?sno=${study.sno}">게시물 수정</a> <a
-		onclick="if (confirm('삭제 하시겠습니까?') == false) return false;"
+	<a href="./list">게시물리스트</a> 
+	<a href="./add">게시물 추가</a> 
+	<a href="./modify?sno=${study.sno}">게시물 수정</a> 
+	<a onclick="if (confirm('삭제 하시겠습니까?') == false) return false;"
 		href="./doDelete?sno=${study.sno}">게시물 삭제</a>
 </div>
-
+<div class="btns con">
+	<input type="hidden" id="sno" value="${study.sno}">
+	<c:choose>
+    	<c:when test="${isJoin eq 'true'}">
+            <button class="btn">참여중</button>
+        </c:when>
+        <c:when test="${isJoin eq 'false' }">
+            <button class="joinGroup btn" data="join">참가신청</button>
+        </c:when>
+    </c:choose>
+</div>
+<script>
+$(document).ready(function(){
+	joinGroup();
+});
+function joinGroup() {
+    $('.joinGroup').on('click', function () {
+    	 var joincode = prompt('가입코드를 입력하세요.');
+    	 if (joincode != null){
+	         var no = $('#sno').val();
+	         $.ajax({
+	             type: 'POST',
+	             url: '/study/join',
+	             data: {
+	                 sno: no,
+	                 code: joincode
+	             },
+	             dataType: 'text',
+	             success: function(result){
+	             	if (result == 'SUCCESS')
+	                 alert('가입되었습니다.');
+	             	 location.reload();
+	             },
+	             error: function(request){
+			        alert(request.responseText);
+			     }
+	         });
+    	 }
+    });
+}
+</script>
 <%@ include file="../part/foot.jspf"%>

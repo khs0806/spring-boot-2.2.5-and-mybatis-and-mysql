@@ -51,7 +51,12 @@
 		where id = #{id} AND joincode = #{joincode}
 	</select>
 	
-	<update id="join">
+	<select id="getJoinCode" resultType="String">
+		select joincode from study
+		where sno = #{sno}
+	</select>
+	
+	<update id="groupJoin">
 		<selectKey keyProperty="no" order="BEFORE" resultType="int">
 			select coalesce(max(no+1),1) as sno from studymember
 		</selectKey>
@@ -59,10 +64,15 @@
 		values (#{no}, #{sno}, #{id}, sysdate)
 	</update>
 	
+	<select id="isJoin" resultType="int">
+		select count(*) from studymember
+		where id=#{id} AND sno = #{sno}
+	</select>
+	
 	<update id="modify">
 		UPDATE study
-		SET title = #{title},
-		body = #{body}
+			SET title = #{title},
+			body = #{body}
 		WHERE id = #{id}
 	</update>
 	
