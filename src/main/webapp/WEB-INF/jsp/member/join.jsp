@@ -75,14 +75,8 @@
 				aria-describedby="name">
 		</div>
 		<div class="form-group">
-			<label for="name">닉네임 입력</label> <input
-				type="text" name="name"
-				class="form-control" id="name"
-				aria-describedby="name">
-		</div>
-		<div class="form-group">
 			<label for="name">이메일 입력</label> <input
-				type="text" name="email"
+				type="email" name="email"
 				class="form-control" id="name"
 				aria-describedby="name">
 		</div>

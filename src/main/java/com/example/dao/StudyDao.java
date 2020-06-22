@@ -1,7 +1,6 @@
 package com.example.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -26,10 +25,11 @@ public interface StudyDao {
 	
 	public int getTotalCount();
 
-	public Study getOne(long id);
+	public Study getOne(long sno);
 
-	public void delete(long id);
-
-	public void modify(Map<String, Object> param);
-
+	public void modify(Study study);
+	
+	public int delete(String id, long sno);
+	
+	public int kickOut(String kickedId, long sno);
 }

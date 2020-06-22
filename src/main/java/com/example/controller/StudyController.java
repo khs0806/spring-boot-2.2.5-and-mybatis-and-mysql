@@ -31,7 +31,17 @@ public class StudyController {
 	
 	@Autowired
 	StudyService studyService;
-	
+
+	@RequestMapping("/study/list")
+	public String showList(Model model) {
+		List<Study> list = studyService.getList();
+		int totalCount = studyService.getTotalCount();
+		
+		model.addAttribute("list", list);
+		model.addAttribute("totalCount", totalCount);
+
+		return "study/list";
+	}
 	@RequestMapping("/study/detail")
 	public String showDetail(Model model, long sno, HttpSession session, StudyMember studyMember) {
 		Study study = studyService.getOne(sno);
@@ -46,34 +56,15 @@ public class StudyController {
 		model.addAttribute("isJoin", result);
 		return "study/detail";
 	}
-	
-	@RequestMapping("/study/modify")
-	public String showModify(Model model, long id) {
-		Study study = studyService.getOne(id);
-		model.addAttribute("study", study);
-		
-		return "study/modify";
-	}
-	
-	@RequestMapping("/study/list")
-	public String showList(Model model) {
-		List<Study> list = studyService.getList();
-		int totalCount = studyService.getTotalCount();
-		
-		model.addAttribute("list", list);
-		model.addAttribute("totalCount", totalCount);
 
-		return "study/list";
-	}
-	
-	@RequestMapping("/study/add")
+	@RequestMapping(value="/study/add", method=RequestMethod.GET)
 	public String showAdd() {
 	
 		return "study/add";
 	}
 	
 	@ResponseBody
-	@RequestMapping("/study/doAdd")
+	@RequestMapping(value="/study/doAdd", method=RequestMethod.POST)
 	public String doAdd(Study study) {
 		StudyMember member = studyService.add(study);
 		String id = member.getId();
@@ -90,6 +81,31 @@ public class StudyController {
 
 		return sb.toString();
 	}
+	
+	@RequestMapping(value="/study/modify", method=RequestMethod.GET)
+	public String showModify(Model model, long sno) {
+		Study study = studyService.getOne(sno);
+		model.addAttribute("study", study);
+		
+		return "study/modify";
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/study/doModify", method=RequestMethod.POST)
+	public String doModify(Study study, long sno) {
+		
+		studyService.modify(study);
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("alert('스터디가 수정되었습니다.');");
+		sb.append("location.replace('./detail?sno=" + sno + "');");
+		sb.insert(0, "<script>");
+		sb.append("</script>");
+		
+		return sb.toString();
+	}
+	
+	
 	
 	// 스터디 그룹가입 AJAX 통신방식. 
 	@ResponseBody
@@ -112,35 +128,40 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping("/study/doDelete")
-	public String doDelete(long id) {
-		
-		studyService.delete(id);
-		String msg = id + "번 게시물이 삭제되었습니다.";
+	public String doDelete(long sno, HttpSession session) {
+		String id = (String) session.getAttribute("loginedMemberId");
+		int result = studyService.delete(id, sno);
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("alert('"  + msg + "');");
-		sb.append("location.replace('./list');");
-		sb.insert(0, "<script>");
-		sb.append("</script>");
+			
+		if (result > 0) {
+			sb.append("alert('스터디가 삭제되었습니다.');");
+			sb.append("location.replace('./list');");
+			sb.insert(0, "<script>");
+			sb.append("</script>");
+		} else {
+			sb.append("alert('스터디장만 삭제할 수 있습니다..');");
+			sb.append("location.replace('./list');");
+			sb.insert(0, "<script>");
+			sb.append("</script>");
+		}
 		
 		return sb.toString();
-		
 	}
 	
 	@ResponseBody
-	@RequestMapping("/study/doModify")
-	public String doModify(@RequestParam Map<String, Object> param, long id) {
+	@RequestMapping(value="/study/kickout", method=RequestMethod.POST)
+	public String kickOut(long sno, String kickedId, HttpSession session) {
 		
-		studyService.modify(param);
-		String msg = id + "번 게시물이 수정되었습니다.";
-		StringBuilder sb = new StringBuilder();
+		String response = null;
 		
-		sb.append("alert('"  + msg + "');");
-		sb.append("location.replace('./modify?id=" + id + "');");
-		sb.insert(0, "<script>");
-		sb.append("</script>");
+		String id = (String) session.getAttribute("loginedMemberId");
+		int result = studyService.kickOut(id, sno, kickedId);
+		if (result > 0) {
+			response = "success";
+		} else {
+			response = "fail";
+		}
 		
-		return sb.toString();
-		
+		return response;
 	}
 }

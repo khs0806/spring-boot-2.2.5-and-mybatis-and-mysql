@@ -1,7 +1,6 @@
 package com.example.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.example.dao.StudyDao;
 import com.example.model.Study;
 import com.example.model.StudyMember;
-import com.example.util.CUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -96,18 +94,30 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public Study getOne(long id) {
+	public Study getOne(long sno) {
+		return studyDao.getOne(sno);
+	}
+
+	@Override
+	public void modify(Study study) {
+		studyDao.modify(study);
+	}
+	
+	@Override
+	public int delete(String id, long sno) {
+		return studyDao.delete(id, sno);
+	}
+	
+	@Override
+	public int kickOut(String id, long sno, String kickedId) {
+		int result = 0;
+		// 현재 접속한 ID가 스터디장 ID와 일치 하는지 체크
+		Study study = studyDao.getOne(sno);
+		if (id.equals(study.getId())) {
+			result = studyDao.kickOut(kickedId, sno);
+		}
 		
-		return studyDao.getOne(id);
+		return result;
 	}
 
-	@Override
-	public void delete(long id) {
-		studyDao.delete(id);
-	}
-
-	@Override
-	public void modify(Map<String, Object> param) {
-		studyDao.modify(param);
-	}
 }

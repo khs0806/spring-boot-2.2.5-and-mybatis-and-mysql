@@ -81,7 +81,7 @@ public class MemberController {
 			return "common/redirect";
 		}
 		model.addAttribute("alertMsg", joinRs.get("msg"));
-		model.addAttribute("redirectUrl", "/member/login");
+		model.addAttribute("redirectUrl", "/");
 		
 		return "common/redirect";
 	}

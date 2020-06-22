@@ -11,7 +11,7 @@
 	<insert id="join" parameterType="map" useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO member
-		values (#{id}, #{pass}, #{name}, #{email}, SYSDATE)
+		values (#{id}, #{pass}, #{email}, SYSDATE)
 	</insert>
 	
 	<select id="getMatchedOne" parameterType="string" resultType="Member">

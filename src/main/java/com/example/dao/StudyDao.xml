@@ -23,8 +23,8 @@
 		SELECT  
 				sno, id, sname, 
 				content, mname, location, 
-				to_char(totime,'YY-MM-DD') as totime, 
-				to_char(fromtime,'YY-MM-DD') as fromtime, 
+				to_char(totime,'YYYY-MM-DD') as totime, 
+				to_char(fromtime,'YYYY-MM-DD') as fromtime, 
 				to_char(sdate,'hh24:mi') as sdate, 
 				joincode
 		FROM study
@@ -71,14 +71,24 @@
 	
 	<update id="modify">
 		UPDATE study
-			SET title = #{title},
-			body = #{body}
-		WHERE id = #{id}
+		SET sname = #{sname},
+			content = #{content},
+			location = #{location},
+			totime = #{totime},
+			fromtime = #{fromtime},
+			sdate = to_date(#{sdate}, 'HH24:MI')
+		WHERE id = #{id} AND joincode = #{joincode}
 	</update>
 	
 	
-	<delete id="delete" parameterType="long" >
+	<delete id="delete">
 		DELETE FROM study
-		WHERE id = #{id}
+		WHERE id = #{id} AND sno = #{sno}
 	</delete>
+	
+	<delete id="kickOut">
+		DELETE FROM studymember
+		WHERE sno = #{sno} AND id = #{kickedId}
+	</delete>
+	
 </mapper>
