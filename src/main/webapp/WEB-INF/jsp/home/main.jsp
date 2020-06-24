@@ -23,6 +23,7 @@
 				</c:if>
 				<c:if test="${isLogined}">
 					<li style="float: right;">
+						<a href="/study/mystatus">나의 스터디 보기</a>
 						<a href="/member/doLogout">로그아웃</a>
 					</li>
 				</c:if>	

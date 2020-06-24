@@ -13,10 +13,23 @@
 		FROM study
 	</select>
 	
-	<select id="getMemberList" resultType="study">
+	<select id="getMyStudyList" resultType="map">
+		SELECT * 
+		FROM study s, studymember m
+		WHERE s.sno = m.sno
+		AND m.id = #{id}
+	</select>
+	
+	<select id="getMemberList" resultType="StudyMember">
 		SELECT *
 		FROM studymember
 		where sno = #{sno}
+	</select>
+	
+	<select id="getMemberOne" resultType="StudyMember">
+		SELECT *
+		FROM studymember
+		WHERE sno = #{sno} AND id = #{id}
 	</select>
 	
 	<select id="getOne" parameterType="long" resultType="Study">
@@ -56,13 +69,13 @@
 		where sno = #{sno}
 	</select>
 	
-	<update id="groupJoin">
+	<insert id="groupJoin">
 		<selectKey keyProperty="no" order="BEFORE" resultType="int">
 			select coalesce(max(no+1),1) as sno from studymember
 		</selectKey>
 		insert into studymember (no, sno, id, gdate)
 		values (#{no}, #{sno}, #{id}, sysdate)
-	</update>
+	</insert>
 	
 	<select id="isJoin" resultType="int">
 		select count(*) from studymember
@@ -90,5 +103,33 @@
 		DELETE FROM studymember
 		WHERE sno = #{sno} AND id = #{kickedId}
 	</delete>
+	
+	<select id="getPoint" resultType="int">
+		SELECT NVL(SUM(score),0)
+		FROM point
+		WHERE mno = #{mno}
+	</select>
+	
+	<select id="getPointList" resultType="Point">
+		SELECT *
+		FROM point
+		WHERE mno = ${mno}
+	</select>
+	
+	<insert id="pointUp">
+		<selectKey keyProperty="no" order="BEFORE" resultType="long">
+			SELECT coalesce(max(no+1),1) AS no FROM point
+		</selectKey>
+		INSERT INTO point (no, mno, score, reason, gdate)
+		values (#{no}, #{mno}, #{score}, #{reason}, sysdate)
+	</insert>
+	
+	<select id="getMno" resultType="Point">
+		SELECT no AS mno 
+		FROM studymember
+		WHERE id = #{id} AND sno = #{sno}
+	</select>
+	
+	
 	
 </mapper>

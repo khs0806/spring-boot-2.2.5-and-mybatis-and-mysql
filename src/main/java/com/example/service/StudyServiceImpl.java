@@ -1,12 +1,15 @@
 package com.example.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.StudyDao;
+import com.example.model.Point;
 import com.example.model.Study;
 import com.example.model.StudyMember;
 
@@ -24,6 +27,11 @@ public class StudyServiceImpl implements StudyService {
 	public List<Study> getList() {
 		return studyDao.getList();	
   	}
+	
+	@Override
+	public List<Map<String, Object>> getMyStudyList(String id) {
+		return studyDao.getMyStudyList(id);
+	}
 	
 	@Override
 	public StudyMember add(Study study) {
@@ -87,6 +95,12 @@ public class StudyServiceImpl implements StudyService {
 		List<StudyMember> studyList = studyDao.getMemberList(sno);
 		return studyList;
 	}
+	
+	@Override
+	public StudyMember getMemberOne(String id, long sno) {
+		
+		return studyDao.getMemberOne(id, sno);
+	}
 
 	@Override
 	public int getTotalCount() {
@@ -118,6 +132,29 @@ public class StudyServiceImpl implements StudyService {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public int groupOut(String id, long sno) {
+		
+		return studyDao.kickOut(id, sno);
+	}
+	
+	@Override
+	public int pointUp(Point point) {
+		
+		return studyDao.pointUp(point);
+	}
+	
+	@Override
+	public int getPoint(long mno) {
+		
+		return studyDao.getPoint(mno);
+	}
+	
+	@Override
+	public List<Point> getPointList(long mno) {
+		return studyDao.getPointList(mno);
 	}
 
 }

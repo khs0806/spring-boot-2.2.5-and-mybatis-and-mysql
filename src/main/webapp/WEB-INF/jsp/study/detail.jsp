@@ -25,14 +25,28 @@
        <span>스터디 장</span>
   		<p>${study.id}</p>
 </section>
-   <section class="con">
-       <span>스터디 회원</span>
+
+<c:if test="${loginedMemberId ne study.id}">
+<section class="con">
+	<span>스터디 회원</span>
 	<c:forEach items="${memberList}" var="list">
 		<c:if test="${list.id ne study.id}">
-    		<p>${list.id}</p>
+			<p>${list.id}</p>
 		</c:if>
 	</c:forEach>
 </section>
+</c:if>
+
+<c:if test="${loginedMemberId eq study.id}">
+<section class="con">
+	<span>스터디 회원</span>
+	<c:forEach items="${memberList}" var="list">
+		<c:if test="${list.id ne study.id}">
+			<p><a href="./pointview?sno=${study.sno}&id=${list.id}">${list.id}</a></p>
+		</c:if>
+	</c:forEach>
+</section>
+</c:if>
 
 <div class="btns con">
 	<button class="btn">
@@ -52,7 +66,7 @@
 	<c:choose>
     	<c:when test="${isJoin eq 'true'}">
             <button class="btn">참여중</button>
-            <button class="btn">탈퇴하기</button>
+            <button class="groupOut btn" data-sno="${study.sno}">탈퇴하기</button>
         </c:when>
         <c:when test="${isJoin eq 'false' }">
             <button class="joinGroup btn" data="join">참가신청</button>
@@ -63,6 +77,7 @@
 $(document).ready(function(){
 	joinGroup();
 	kickOut();
+	groupOutFunc();
 });
 function joinGroup() {
     $('.joinGroup').on('click', function () {
@@ -120,6 +135,36 @@ function kickOut() {
     		 alert('스터디장은 탈퇴시킬 수 없습니다.');
     	 }
     });
+}
+function groupOutFunc(){
+	var check = false;
+	$('.groupOut').on('click', function () {
+	    $.ajax({
+	        type: 'POST',
+	        url: '/study/groupout',
+	        data: {
+	            sno: $('.groupOut').data('sno')
+	        },
+	        dataType: 'text',
+	        success: function (result) {
+	            if (result == '1') {
+	                check = true;
+	            }
+	        },
+	        error: function () {
+	            check = false;
+	        },
+	        complete: function () {
+	            if (check == true) {
+	                alert('해당 스터디를 탈퇴 했습니다.');
+	                location.reload();
+	            } else {
+	                alert('탈퇴에 실패 했습니다. 다시 한번 확인해주세요.');
+	                location.reload();
+	            }
+	        }
+	    });
+	});
 }
 </script>
 <%@ include file="../part/foot.jspf"%>

@@ -1,11 +1,13 @@
 package com.example.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.dao.StudyDao;
+import com.example.model.Point;
 import com.example.model.Study;
 import com.example.model.StudyMember;
 import com.example.service.StudyService;
@@ -161,7 +164,77 @@ public class StudyController {
 		} else {
 			response = "fail";
 		}
-		
 		return response;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/study/groupout", method=RequestMethod.POST)
+	public String groupOut(long sno, HttpSession session) {
+		
+		String id = (String) session.getAttribute("loginedMemberId");
+		String result = Integer.toString(studyService.groupOut(id, sno));
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/study/pointview", method=RequestMethod.GET)
+	public String pointView(long sno, StudyMember member, Model model) {
+		System.out.println(sno +" "+ member.getId());
+		
+		member = studyService.getMemberOne(member.getId(), sno);
+		long mno = member.getNo();
+		List<Point> pointList = studyService.getPointList(mno);
+		int point = studyService.getPoint(mno);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("pointList", pointList);
+		model.addAttribute("point", point);
+		model.addAttribute("sno", sno);
+		
+		return "study/pointUp";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/study/pointup", method=RequestMethod.POST)
+	public String pointUp(Point point, String id, long sno) {
+		
+		StudyMember member = studyService.getMemberOne(id, sno);
+		long mno = member.getNo();
+		point.setMno(mno);
+		
+		studyService.pointUp(point);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("alert('포인트가 반영되었습니다.');");
+		sb.append("location.replace('./pointview?sno="+ sno + "&id=" + id + "');");
+		sb.insert(0, "<script>");
+		sb.append("</script>");
+		
+		return sb.toString();
+	}
+	@RequestMapping("/study/mystatus")
+	public String myStudyStatus(HttpSession session, Model model) {
+		
+		String id = (String) session.getAttribute("loginedMemberId");
+		List<Map<String,Object>> myStudyList = studyService.getMyStudyList(id);
+		System.out.println(myStudyList.toString());
+		model.addAttribute("myList",myStudyList);
+		
+		return "study/myStudyView";
+	}
+	@RequestMapping("/study/mypoint")
+	public String myPointStatus(long sno, HttpSession session, Model model) {
+		
+		String id = (String) session.getAttribute("loginedMemberId");
+		
+		Study study = studyService.getOne(sno);
+		StudyMember member = studyService.getMemberOne(id, sno);
+		long mno = member.getNo();
+		List<Point> pointList = studyService.getPointList(mno);
+		
+		model.addAttribute("study", study);
+		model.addAttribute("point", pointList);
+		
+		return "study/myPointView";
 	}
 }
