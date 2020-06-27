@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.StudyDao;
-import com.example.model.Point;
-import com.example.model.Study;
-import com.example.model.StudyMember;
+import com.example.model.Criteria;
+import com.example.model.PointVO;
+import com.example.model.StudyMemberVO;
+import com.example.model.StudyVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,8 +25,8 @@ public class StudyServiceImpl implements StudyService {
 	StudyDao studyDao;
 	
 	@Override
-	public List<Study> getList() {
-		return studyDao.getList();	
+	public List<StudyVO> getList(Criteria cri) {
+		return studyDao.getList(cri);	
   	}
 	
 	@Override
@@ -34,7 +35,7 @@ public class StudyServiceImpl implements StudyService {
 	}
 	
 	@Override
-	public StudyMember add(Study study) {
+	public StudyMemberVO add(StudyVO study) {
 		
 		// 가입코드 생성 로직
 		StringBuffer temp = new StringBuffer();
@@ -60,7 +61,7 @@ public class StudyServiceImpl implements StudyService {
 		study.setJoincode(temp.toString());
 		int result = studyDao.add(study);
 		int sno = studyDao.getStudyNo(study);
-		StudyMember studyMember = new StudyMember();
+		StudyMemberVO studyMember = new StudyMemberVO();
 		if (result == 1) {
 			studyMember.setSno(sno);
 			studyMember.setId(study.getId());
@@ -70,7 +71,7 @@ public class StudyServiceImpl implements StudyService {
 	}
 	
 	@Override
-	public void groupJoin(StudyMember studyMember,String code) throws Exception {
+	public void groupJoin(StudyMemberVO studyMember,String code) throws Exception {
 		long sno = studyMember.getSno();
 		String joincode = studyDao.getJoinCode(sno);
 		if (code.equals(joincode)) {
@@ -81,7 +82,7 @@ public class StudyServiceImpl implements StudyService {
 	}
 	
 	@Override
-	public boolean isJoin(StudyMember studyMember) {
+	public boolean isJoin(StudyMemberVO studyMember) {
 		int isGroup = studyDao.isJoin(studyMember);
 		boolean result = false;
 		if ( isGroup > 0 ) {
@@ -91,13 +92,13 @@ public class StudyServiceImpl implements StudyService {
 	}
 	
 	@Override
-	public List<StudyMember> getMemberList(long sno) {
-		List<StudyMember> studyList = studyDao.getMemberList(sno);
+	public List<StudyMemberVO> getMemberList(long sno) {
+		List<StudyMemberVO> studyList = studyDao.getMemberList(sno);
 		return studyList;
 	}
 	
 	@Override
-	public StudyMember getMemberOne(String id, long sno) {
+	public StudyMemberVO getMemberOne(String id, long sno) {
 		
 		return studyDao.getMemberOne(id, sno);
 	}
@@ -108,12 +109,12 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public Study getOne(long sno) {
+	public StudyVO getOne(long sno) {
 		return studyDao.getOne(sno);
 	}
 
 	@Override
-	public void modify(Study study) {
+	public void modify(StudyVO study) {
 		studyDao.modify(study);
 	}
 	
@@ -126,7 +127,7 @@ public class StudyServiceImpl implements StudyService {
 	public int kickOut(String id, long sno, String kickedId) {
 		int result = 0;
 		// 현재 접속한 ID가 스터디장 ID와 일치 하는지 체크
-		Study study = studyDao.getOne(sno);
+		StudyVO study = studyDao.getOne(sno);
 		if (id.equals(study.getId())) {
 			result = studyDao.kickOut(kickedId, sno);
 		}
@@ -141,7 +142,7 @@ public class StudyServiceImpl implements StudyService {
 	}
 	
 	@Override
-	public int pointUp(Point point) {
+	public int pointUp(PointVO point) {
 		
 		return studyDao.pointUp(point);
 	}
@@ -153,7 +154,7 @@ public class StudyServiceImpl implements StudyService {
 	}
 	
 	@Override
-	public List<Point> getPointList(long mno) {
+	public List<PointVO> getPointList(long mno) {
 		return studyDao.getPointList(mno);
 	}
 

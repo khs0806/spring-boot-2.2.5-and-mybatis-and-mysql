@@ -12,7 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.controller.MemberController;
-import com.example.model.Member;
+import com.example.model.MemberVO;
 import com.example.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 			
 		boolean isLogined = false;
 		String loginedMemberId = null;
-		Member loginedMember = null;
+		MemberVO loginedMember = null;
 
 		HttpSession session = request.getSession();
 		if ( session.getAttribute("loginedMemberId") != null ) {

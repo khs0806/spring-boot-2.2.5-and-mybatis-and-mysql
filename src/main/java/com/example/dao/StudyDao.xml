@@ -2,15 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.dao.StudyDao">
-	<select id="getList" resultType="study">
-		SELECT 
-				sno, id, sname, 
-				content, mname, location, 
-				to_char(totime,'YY-MM-DD') as totime, 
-				to_char(fromtime,'YY-MM-DD') as fromtime, 
-				to_char(sdate,'hh24:mi') as sdate, 
-				joincode 
-		FROM study
+	<select id="getList" resultType="studyVO">
+		SELECT  sno, id, sname, 
+				content, mname, location, totime, 
+				fromtime, sdate, joincode
+		 FROM ( 
+		        SELECT  sno, id, sname, 
+						content, mname, location, 
+						to_char(totime,'YY-MM-DD') as totime, 
+						to_char(fromtime,'YY-MM-DD') as fromtime, 
+						to_char(sdate,'hh24:mi') as sdate, 
+						joincode, 
+		                ROW_NUMBER() OVER(ORDER BY sno DESC) AS RNUM
+		         FROM study
+		       ) 
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY sno DESC
 	</select>
 	
 	<select id="getMyStudyList" resultType="map">
@@ -20,24 +27,24 @@
 		AND m.id = #{id}
 	</select>
 	
-	<select id="getMemberList" resultType="StudyMember">
+	<select id="getMemberList" resultType="StudyMemberVO">
 		SELECT *
 		FROM studymember
 		where sno = #{sno}
 	</select>
 	
-	<select id="getMemberOne" resultType="StudyMember">
+	<select id="getMemberOne" resultType="StudyMemberVO">
 		SELECT *
 		FROM studymember
 		WHERE sno = #{sno} AND id = #{id}
 	</select>
 	
-	<select id="getOne" parameterType="long" resultType="Study">
+	<select id="getOne" parameterType="long" resultType="StudyVO">
 		SELECT  
 				sno, id, sname, 
 				content, mname, location, 
-				to_char(totime,'YYYY-MM-DD') as totime, 
-				to_char(fromtime,'YYYY-MM-DD') as fromtime, 
+				to_char(totime,'YYYY-MM-DD (dy)') as totime, 
+				to_char(fromtime,'YYYY-MM-DD (dy)') as fromtime, 
 				to_char(sdate,'hh24:mi') as sdate, 
 				joincode
 		FROM study
@@ -110,7 +117,7 @@
 		WHERE mno = #{mno}
 	</select>
 	
-	<select id="getPointList" resultType="Point">
+	<select id="getPointList" resultType="PointVO">
 		SELECT *
 		FROM point
 		WHERE mno = ${mno}
@@ -124,12 +131,10 @@
 		values (#{no}, #{mno}, #{score}, #{reason}, sysdate)
 	</insert>
 	
-	<select id="getMno" resultType="Point">
+	<select id="getMno" resultType="PointVO">
 		SELECT no AS mno 
 		FROM studymember
 		WHERE id = #{id} AND sno = #{sno}
 	</select>
-	
-	
 	
 </mapper>

@@ -1,77 +1,148 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<c:set var="pageName" value="게시물 상세페이지" />
+<c:set var="pageName" value="스터디 상세페이지" />
 <%@ include file="../part/head.jspf"%>
-
-<section class="con">
-	번호 : ${study.sno}<br> 
-	제목 : ${study.sname}<br> 
-	내용 : ${study.content}<br>
-	시작날짜 : ${study.totime}<br> 
-	종료날짜 : ${study.fromtime}<br> 
-	스터디 시작시간 : ${study.sdate}<br><br>
-</section>
-
-<c:if test="${loginedMemberId eq study.id}">
-	<div class="con">
-		<span>가입코드</span>
-		<p>${study.joincode}</p>
-	</div>
-</c:if>
-
-<section class="con">
-       <span>스터디 장</span>
-  		<p>${study.id}</p>
-</section>
-
-<c:if test="${loginedMemberId ne study.id}">
-<section class="con">
-	<span>스터디 회원</span>
-	<c:forEach items="${memberList}" var="list">
-		<c:if test="${list.id ne study.id}">
-			<p>${list.id}</p>
+<style>
+body {
+	background-color:beige;
+}
+.btn-primary {
+	background-color:#60c7c1;
+	border-color: #ffffff;
+	color: #0000009c;
+	font-weight: 600;
+}
+</style>
+<div class="container">
+	<hr />
+	<section id="container">
+		<form name="readForm" role="form" method="post">
+			<input type="hidden" id="bno" name="bno" value="${read.bno}" /> 
+			<input type="hidden" id="page" name="page" value="${scri.page}"> 
+			<input type="hidden" id="perPageNum" name="perPageNum" value="${scri.perPageNum}"> 
+			<input type="hidden" id="searchType" name="searchType" value="${scri.searchType}">
+			<input type="hidden" id="keyword" name="keyword" value="${scri.keyword}"> 
+			<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+		</form>
+		<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">스터디 제목</label>
+			<input type="text" id="title" name="title" class="form-control"
+				value="${study.sname}" readonly="readonly" />
+		</div>
+		<div class="form-group">
+			<label for="content" class="col-sm-2 control-label">내용</label>
+			<textarea rows="12" id="content" name="content" class="form-control"
+				readonly="readonly"><c:out value="${study.content}" /></textarea>
+		</div>
+		<div class="form-group">
+			<label for="writer" class="col-sm-2 control-label">스터디장</label> 
+			<input type="text" id="writer" name="writer" class="form-control"
+				value="${study.id}" readonly="readonly" />
+		</div>
+		<div class="form-group">
+			<label for="writer" class="col-sm-2 control-label">스터디원</label> 
+			<input type="text" id="writer" name="writer" class="form-control"
+				value="<c:forEach items="${memberList}" var="list"><c:if test="${list.id ne study.id}">${list.id},  </c:if></c:forEach>" readonly="readonly" />
+		</div>
+		<div class="form-group">
+			<label for="regdate" class="col-sm-2 control-label">스터디 기간</label>
+			<input type="text" id="writer" name="writer" class="form-control"
+				value=" ${study.totime} ~ ${study.fromtime}" readonly="readonly" />
+		</div>
+		<div class="form-group">
+			<label for="regdate" class="col-sm-2 control-label">스터디 시작시간</label>
+			<input type="text" id="writer" name="writer" class="form-control"
+				value=" ${study.sdate}" readonly="readonly" />
+		</div>
+		<c:if test="${loginedMemberId eq study.id}">
+			<div class="form-group">
+				<label for="regdate" class="col-sm-2 control-label">스터디 가입코드</label>
+				<input type="text" id="writer" name="writer" class="form-control"
+					value=" ${study.joincode}" readonly="readonly" />
+			</div>
 		</c:if>
-	</c:forEach>
-</section>
-</c:if>
+		<ul id="replies">
+		</ul>
+		<hr>
+		<div class="boardlist mb-4">
+			<a href="./list"><button class="list_btn btn btn-primary btn-xl">목록</button></a>
+			<c:if test="${loginedMemberId eq study.id}">
+				<div class="pull-right">
+					<a href="./modify?sno=${study.sno}"><button class="btn delete_btn btn btn-primary btn-xl">수정</button></a>
+					<button class="kickOut btn delete_btn btn btn-primary btn-xl" data="join">스터디원 추방</button>
+					<a onclick="if (confirm('삭제 하시겠습니까?') == false) return false;" href="./doDelete?sno=${study.sno}">
+						<button class="btn btn-primary btn-xl">
+						스터디 삭제
+						</button>
+					</a> 
+				</div>
+			</c:if>
+			<div class="btns pull-right">
+				<input type="hidden" id="sno" value="${study.sno}">
+				<c:choose>
+			    	<c:when test="${isJoin eq 'true' && loginedMemberId ne study.id}">
+			            <button class="groupOut btn btn-primary btn-xl" data-sno="${study.sno}">탈퇴하기</button>
+			        </c:when>
+			        <c:when test="${isJoin eq 'false' }">
+			            <button class="joinGroup btn btn-primary btn-xl" data="join">참가신청</button>
+			        </c:when>
+			    </c:choose>
+			</div>
+		</div>
+		<!-- 댓글 리스트 -->
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- /.panel -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<i class="fa fa-comments fa-fw"></i> 댓글
+					</div>
+					<!-- /.panel-heading -->
+					<div class="panel-body">
+						<ul class="chat">
 
-<c:if test="${loginedMemberId eq study.id}">
-<section class="con">
-	<span>스터디 회원</span>
-	<c:forEach items="${memberList}" var="list">
-		<c:if test="${list.id ne study.id}">
-			<p><a href="./pointview?sno=${study.sno}&id=${list.id}">${list.id}</a></p>
-		</c:if>
-	</c:forEach>
-</section>
-</c:if>
+						</ul>
+						<!-- ./ end ul -->
+					</div>
+					<!-- /.panel .chat-panel -->
+					<div class="panel-footer">by Kim-hyunsoo</div>
+				</div>
+			</div>
+			<!-- ./ end row -->
+		</div>
 
-<div class="btns con">
-	<button class="btn">
-		<a href="./list">목록으로</a>
-	</button>
-	<c:if test="${loginedMemberId eq study.id}">
-		<button class="btn"><a href="./modify?sno=${study.sno}">수정</a></button>
-		<button class="kickOut btn" data="join">스터디원 추방</button>
-		<button class="btn">
-			<a onclick="if (confirm('삭제 하시겠습니까?') == false) return false;"
-				href="./doDelete?sno=${study.sno}">스터디 삭제</a>
-		</button> 
-	</c:if> 
-</div>
-<div class="btns con">
-	<input type="hidden" id="sno" value="${study.sno}">
-	<c:choose>
-    	<c:when test="${isJoin eq 'true'}">
-            <button class="btn">참여중</button>
-            <button class="groupOut btn" data-sno="${study.sno}">탈퇴하기</button>
-        </c:when>
-        <c:when test="${isJoin eq 'false' }">
-            <button class="joinGroup btn" data="join">참가신청</button>
-        </c:when>
-    </c:choose>
+		<!-- 댓글작성 -->
+		<hr>
+		<div name="replyForm" class="form-horizontal">
+			<div>
+				<span><strong>Comments</strong></span> <span id="cCnt"></span>
+			</div>
+			<div class="reply">
+				<div class="replyName">
+					<div class="input-group">
+						<input type="text" class="form-control" id="newReplyWriter"
+							name="writer" placeholder="이름을 입력하세요.">
+					</div>
+				</div>
+				<div class="replyComment">
+					<div class="input-group">
+						<textarea rows="3" cols="30" placeholder="댓글을 입력하세요"
+							class="form-control" id="newReplyText" name="content"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 mt-2">
+					<button type="submit" class="btn btn-primary" id="replyAddBtn">
+						댓글 작성</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	<hr />
 </div>
 <script>
 $(document).ready(function(){

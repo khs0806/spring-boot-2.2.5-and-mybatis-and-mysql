@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.model.Member;
+import com.example.model.MemberVO;
 import com.example.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class MemberController {
 	@RequestMapping("/member/doLogin")
 	public String doLogin(@RequestParam Map<String, Object> param, Model model, HttpSession session) {
 		//로그인 아이디 비밀번호가 일치하는지 체크
-		Member matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
+		MemberVO matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
 				(String) param.get("loginPw"));
 		
 		if (matchedMember == null) {

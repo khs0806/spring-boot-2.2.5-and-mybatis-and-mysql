@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.model.Member;
+import com.example.model.MemberVO;
 
 @Mapper
 public interface MemberDao {
@@ -13,8 +13,8 @@ public interface MemberDao {
 
 	public void join(Map<String, Object> param);
 
-	public Member getMatchedOne(String loginId, String loginPw);
+	public MemberVO getMatchedOne(String loginId, String loginPw);
 
-	 public Member getOne(String loginedMemberId);
+	 public MemberVO getOne(String loginedMemberId);
 
 }

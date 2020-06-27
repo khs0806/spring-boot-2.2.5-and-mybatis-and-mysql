@@ -32,5 +32,10 @@ public class HomeController {
 		System.out.println(ip);
 		return "home/main";
 	}
+	
+	@RequestMapping("/temp")
+	public String listTemp() {
+		return "home/temp";
+	}
 
 }

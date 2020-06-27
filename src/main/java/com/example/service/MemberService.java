@@ -2,7 +2,7 @@ package com.example.service;
 
 import java.util.Map;
 
-import com.example.model.Member;
+import com.example.model.MemberVO;
 
 public interface MemberService {
 
@@ -10,9 +10,9 @@ public interface MemberService {
 
 	public Map<String, Object> join(Map<String, Object> param);
 
-	public Member getMatchedOne(String loginId, String loginPw);
+	public MemberVO getMatchedOne(String loginId, String loginPw);
 
-	public Member getOne(String loginedMemberId);
+	public MemberVO getOne(String loginedMemberId);
 
 	
 }

@@ -14,14 +14,14 @@
 		values (#{id}, #{pass}, #{email}, SYSDATE)
 	</insert>
 	
-	<select id="getMatchedOne" parameterType="string" resultType="Member">
+	<select id="getMatchedOne" parameterType="string" resultType="MemberVO">
 		SELECT * 
 		FROM member
 		WHERE id = #{loginId}
 		AND pass = #{loginPw}
 	</select>
 
-	<select id="getOne" parameterType="string" resultType="Member">
+	<select id="getOne" parameterType="string" resultType="MemberVO">
 		SELECT *
 		FROM member
 		WHERE id = #{id}

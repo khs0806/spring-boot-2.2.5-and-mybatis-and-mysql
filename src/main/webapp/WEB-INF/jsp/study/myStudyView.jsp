@@ -8,6 +8,7 @@
 <h3>${pageName}</h3>
 <section class="con">
 	<p>ID : ${loginedMemberId}</p><br> 
+	<p><a href="/">홈으로</a></p><br> 
 	<p>== 내가 가입한 스터디 ==</p>
 	<c:forEach items="${myList}" var="list">
 		<p>스터디 이름 : <a href="./mypoint?sno=${list.SNO}">${list.SNAME}</a></p>

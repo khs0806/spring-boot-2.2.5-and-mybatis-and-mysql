@@ -6,13 +6,14 @@
 
 <header>
 		<div id="title">
-			<span> 당신에게 필요한 모임 - StudyM</span>
+			<span> 당신에게 필요한 모임 - <span style="color:green;"><b>Study</b></span><span style="color: red;"><b>M</b></span>
 		</div>
 		<div id="menu">			
 			<a href="/home/main"><span style="margin-left:50px; color:green;"><b>스터디</b></span><span style="color: red;"><b>엠</b></span></a>
 			<ul>
 				<li style="margin-left: 20px;"><a href="#">공지사항</a></li>
 				<li><a href="/study/list">스터디게시판</a></li>
+				<li><a href="/study/mystatus">나의 스터디 보기</a></li>
 				<c:if test="${isLogined == false}">				
 					<li style="float: right; margin-right: 30px;">
 						<a href="/member/join">회원가입</a>
@@ -22,14 +23,13 @@
 					</li>
 				</c:if>
 				<c:if test="${isLogined}">
-					<li style="float: right;">
-						<a href="/study/mystatus">나의 스터디 보기</a>
+					<li style="float: right; margin-right: 20px;">
 						<a href="/member/doLogout">로그아웃</a>
 					</li>
 				</c:if>	
 				<c:if test="${loginedMember != null}">
 					<li style="float: right;">
-						<div class="con">회원 로그인 ID : ${loginedMember.id}</div>
+						<div class="con">${loginedMember.id}님 환영합니다.</div>
 					</li>
 				</c:if>	
 			</ul>			

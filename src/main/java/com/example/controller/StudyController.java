@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.dao.StudyDao;
-import com.example.model.Point;
-import com.example.model.Study;
-import com.example.model.StudyMember;
+import com.example.model.Criteria;
+import com.example.model.PageMaker;
+import com.example.model.PointVO;
+import com.example.model.StudyMemberVO;
+import com.example.model.StudyVO;
 import com.example.service.StudyService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,21 +36,26 @@ public class StudyController {
 	
 	@Autowired
 	StudyService studyService;
+	
+	@Autowired
+	PageMaker pageMaker;
 
 	@RequestMapping("/study/list")
-	public String showList(Model model) {
-		List<Study> list = studyService.getList();
-		int totalCount = studyService.getTotalCount();
+	public String showList(Model model, Criteria cri) {
+		List<StudyVO> list = studyService.getList(cri);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("cri", cri);
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(studyService.getTotalCount());
+		model.addAttribute("pageMaker", pageMaker);
 
-		return "study/list";
+		return "study/listTemp";
 	}
 	@RequestMapping("/study/detail")
-	public String showDetail(Model model, long sno, HttpSession session, StudyMember studyMember) {
-		Study study = studyService.getOne(sno);
-		List<StudyMember> memberList = studyService.getMemberList(sno);
+	public String showDetail(Model model, long sno, HttpSession session, StudyMemberVO studyMember) {
+		StudyVO study = studyService.getOne(sno);
+		List<StudyMemberVO> memberList = studyService.getMemberList(sno);
 		
 		studyMember.setId((String)session.getAttribute("loginedMemberId"));
 		studyMember.setSno(sno);
@@ -57,7 +64,7 @@ public class StudyController {
 		model.addAttribute("study", study);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("isJoin", result);
-		return "study/detail";
+		return "study/detailTemp";
 	}
 
 	@RequestMapping(value="/study/add", method=RequestMethod.GET)
@@ -68,8 +75,8 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping(value="/study/doAdd", method=RequestMethod.POST)
-	public String doAdd(Study study) {
-		StudyMember member = studyService.add(study);
+	public String doAdd(StudyVO study) {
+		StudyMemberVO member = studyService.add(study);
 		String id = member.getId();
 		long sno = member.getSno();
 		
@@ -87,7 +94,7 @@ public class StudyController {
 	
 	@RequestMapping(value="/study/modify", method=RequestMethod.GET)
 	public String showModify(Model model, long sno) {
-		Study study = studyService.getOne(sno);
+		StudyVO study = studyService.getOne(sno);
 		model.addAttribute("study", study);
 		
 		return "study/modify";
@@ -95,7 +102,7 @@ public class StudyController {
 
 	@ResponseBody
 	@RequestMapping(value="/study/doModify", method=RequestMethod.POST)
-	public String doModify(Study study, long sno) {
+	public String doModify(StudyVO study, long sno) {
 		
 		studyService.modify(study);
 		StringBuilder sb = new StringBuilder();
@@ -113,7 +120,7 @@ public class StudyController {
 	// 스터디 그룹가입 AJAX 통신방식. 
 	@ResponseBody
 	@RequestMapping(value="/study/join", method=RequestMethod.POST)
-	public ResponseEntity<String> joinGroup(String code, StudyMember studyMember, HttpSession session) {
+	public ResponseEntity<String> joinGroup(String code, StudyMemberVO studyMember, HttpSession session) {
 		
 		String id = (String) session.getAttribute("loginedMemberId");
 		studyMember.setId(id);
@@ -178,12 +185,19 @@ public class StudyController {
 	}
 	
 	@RequestMapping(value="/study/pointview", method=RequestMethod.GET)
-	public String pointView(long sno, StudyMember member, Model model) {
-		System.out.println(sno +" "+ member.getId());
+	public String pointView(long sno, StudyMemberVO member, Model model, HttpSession session) {
+		
+		// 이 URL에 접근한 회원이 스터디장이 아닐 경우 "/"로 리다이렉트
+		StudyVO study = studyService.getOne(sno);
+		String studyId = study.getId();
+		String loginedId = (String) session.getAttribute("loginedMemberId");
+		if (!studyId.equals(loginedId)) {
+			return "redirect:/";
+		}
 		
 		member = studyService.getMemberOne(member.getId(), sno);
 		long mno = member.getNo();
-		List<Point> pointList = studyService.getPointList(mno);
+		List<PointVO> pointList = studyService.getPointList(mno);
 		int point = studyService.getPoint(mno);
 		
 		model.addAttribute("member", member);
@@ -196,9 +210,9 @@ public class StudyController {
 	
 	@ResponseBody
 	@RequestMapping(value="/study/pointup", method=RequestMethod.POST)
-	public String pointUp(Point point, String id, long sno) {
+	public String pointUp(PointVO point, String id, long sno) {
 		
-		StudyMember member = studyService.getMemberOne(id, sno);
+		StudyMemberVO member = studyService.getMemberOne(id, sno);
 		long mno = member.getNo();
 		point.setMno(mno);
 		
@@ -227,10 +241,10 @@ public class StudyController {
 		
 		String id = (String) session.getAttribute("loginedMemberId");
 		
-		Study study = studyService.getOne(sno);
-		StudyMember member = studyService.getMemberOne(id, sno);
+		StudyVO study = studyService.getOne(sno);
+		StudyMemberVO member = studyService.getMemberOne(id, sno);
 		long mno = member.getNo();
-		List<Point> pointList = studyService.getPointList(mno);
+		List<PointVO> pointList = studyService.getPointList(mno);
 		
 		model.addAttribute("study", study);
 		model.addAttribute("point", pointList);
