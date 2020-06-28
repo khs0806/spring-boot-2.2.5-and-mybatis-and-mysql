@@ -15,7 +15,24 @@ body {
 	color: #0000009c;
 	font-weight: 600;
 }
+.replyMod {
+	float: right;
+}
+#modDiv {
+	width:300px;
+	height:100px;
+	background-color:gray;
+	position:fixed;
+	top:50%;
+	left:50%;
+	margin-top:-50px;
+	margin-left:-150px;
+	padding:10px;
+	z-index:1000;
+	display:none;
+}
 </style>
+
 <div class="container">
 	<hr />
 	<section id="container">
@@ -124,7 +141,7 @@ body {
 				<div class="replyName">
 					<div class="input-group">
 						<input type="text" class="form-control" id="newReplyWriter"
-							name="writer" placeholder="이름을 입력하세요.">
+							name="id" value="${loginedMemberId}" readonly="readonly">
 					</div>
 				</div>
 				<div class="replyComment">
@@ -141,6 +158,18 @@ body {
 				</div>
 			</div>
 		</div>
+		
+		<!-- 댓글 수정하기 modal -->
+		<div id="modDiv">
+			<div class="modal-title"></div>
+			<div>
+				<input type="text" id="replytext">
+			</div>
+			<div>
+				<button type="button" id="replyModBtn">수정</button>
+				<button type="button" id="closeBtn">닫기</button>
+			</div>
+		</div>
 	</section>
 	<hr />
 </div>
@@ -149,6 +178,12 @@ $(document).ready(function(){
 	joinGroup();
 	kickOut();
 	groupOutFunc();
+	getAllList();
+	replyAdd();
+	replyUpdate();
+	replyDel();
+	replyModalView();
+	replyModalClose();
 });
 function joinGroup() {
     $('.joinGroup').on('click', function () {
@@ -235,6 +270,130 @@ function groupOutFunc(){
 	            }
 	        }
 	    });
+	});
+}
+<!-- 댓글 자바스크립트 -->
+//댓글 목록 가져오기 AJAX
+function getAllList(){
+	var str='';
+	var sno=${study.sno};
+	$.getJSON("/replies/all/" + sno, function(data){
+		console.log(data.length);
+		$(data).each(
+			function(){
+				str +="<li class='left clearfix' data-no='"+this.no+"'>";
+		        str +="<div><div class='header'><strong class='primary-font' style='font-size:17px;'>"
+		    	    +this.id+"</strong>"; 
+		        str +="<small class='pull-right text-muted'>"
+		            +this.regdate+"</small></div>";
+		        str +="<p>"+this.content+"</p></div>"
+		       		+"<div class='replyMod'><button class='btn btn-primary' id='replyMod'>수정</button>"
+		       		+"<button class='btn btn-primary' id='replyDelBtn'>삭제</button></div></li>";
+			});
+		$(".chat").html(str);
+	});
+}
+/* 댓글 등록 */
+function replyAdd(){
+	$("#replyAddBtn").on("click", function(){
+		
+		var replyer = $("#newReplyWriter").val();
+		var replytext = $("#newReplyText").val();
+		var sno=${study.sno};
+		
+		$.ajax({
+			type:'post',
+			url:'/replies/',
+			headers:{
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"POST"
+			},
+			dataType:'text',
+			data : JSON.stringify({
+				sno:sno,
+				id:replyer,
+				content:replytext
+			}),
+			success:function(result){
+				if (result=='SUCCESS'){
+					alert("등록되었습니다.");
+					getAllList();
+				}
+			},
+			error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
+		});
+	});
+}
+/* 댓글 수정 */
+function replyUpdate(){
+	$("#replyModBtn").on("click",function(){
+		
+		var no= $(".modal-title").html();
+		var replytext = $("#replytext").val();
+		
+		$.ajax({
+			type : 'put',
+			url : '/replies/' + no,
+			headers : {
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"PUT"
+			},
+			data : JSON.stringify( {content : replytext} ),
+			dataType:'text',
+			success:function(result){
+				console.log("result: " + result)
+				if (result=='SUCCESS'){
+					alert("수정 되었습니다.");
+					$("#modDiv").hide("slow");
+					getAllList();
+				}
+			}
+		});
+	});
+}		
+/* 댓글 삭제 */
+function replyDel(){
+	$(".chat").on("click",".replyMod #replyDelBtn", function(){
+		
+		var reply = $(this).parents("li");
+		var no = reply.attr("data-no");
+		
+		$.ajax({
+			type:'delete',
+			url:'/replies/' + no,
+			headers:{
+				"Content-Type":"application/json",
+				"X-HTTP-Method-Override":"DELETE"
+			},
+			dataType:'text',
+			success:function(result){
+				console.log("result: " + result)
+				if (result=='SUCCESS'){
+					alert("삭제 되었습니다.");
+					getAllList();
+				}
+			}
+		});
+	});
+}
+//댓글 수정창 불러오기
+function replyModalView(){
+	$(".chat").on("click",".replyMod #replyMod", function(){
+		var reply = $(this).parents("li");
+		var no = reply.attr("data-no");
+		var replytext = reply.find("p").text();
+		
+		$(".modal-title").html(no);
+		$("#replytext").val(replytext);
+		$("#modDiv").show("slow");
+	});
+}
+// 댓글 수정창 닫기
+function replyModalClose(){
+	$("#closeBtn").on("click",function(){
+		$("#modDiv").hide("slow");
 	});
 }
 </script>

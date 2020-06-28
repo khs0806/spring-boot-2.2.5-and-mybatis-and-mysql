@@ -1,0 +1,201 @@
+[33mcommit da2d0f021e38aa3f53c458e591b4aed1c933f786[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Wed Jun 24 23:37:25 2020 +0900
+
+    스터디의 활동점수 기능 추가, 내 스터디 정보 보기 추가
+
+[33mcommit 92d3822cc6ef67d4ed47d46b5a83e1065cd30790[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Mon Jun 22 20:07:34 2020 +0900
+
+    스터디그룹 수정,삭제 구현, 회원추방 구현
+
+[33mcommit 1c7a2f843cc64d3d6e3cab33da60c059cd0fbc10[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Sun Jun 21 20:05:56 2020 +0900
+
+    가입코드를 이용한 스터디 가입기능, 로그인한 회원의 스터디참여여부 체크
+
+[33mcommit 5b15d06dee5f4ee3c7fc0f67324e818442f045de[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Fri Jun 19 20:37:18 2020 +0900
+
+    StudyMember 생성, 스터디 가입 쿼리, 스터디 멤버리스트 뿌려주기 구현
+
+[33mcommit 56c6300d71516d021414c4e62e58b7da6474ed8e[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Wed Jun 17 20:08:37 2020 +0900
+
+    mapper 수정
+
+[33mcommit 0993e67ee7372255dfc80b3a1d01e397da213b4c[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Wed Jun 17 19:51:44 2020 +0900
+
+    스터디관리웹 회원가입기능,스터디그룹등록기능 구현
+
+[33mcommit 14ed79cdc057951d9016e945b26919e95cd81731[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Tue Jun 16 18:54:20 2020 +0900
+
+    프로젝트 전면 수정. DB 변경, 도메인 객체 변경, mapper 변경, 서비스,
+    컨트롤러 변경
+
+[33mcommit d5c512273a04e3d97e6ffb9d1c1cf04ff79ded05[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Tue Mar 10 00:46:41 2020 +0900
+
+    NeedToLogin, NeedToLogout 인터셉터를 적용하여, 각 액션마다 필요한
+    접근권한을 심플하게 처리(인터셉터의 실행순서는 registry가 추가된
+    순서대로 실행된다.)
+
+[33mcommit 78fe0c38ce1e28ca542d9c8e195065b51dcf5114[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Tue Mar 10 00:00:07 2020 +0900
+
+    showMain에서 접근하던 세션 제거(인터셉터로 대신함),jsp 공통상단 메뉴
+    추가
+
+[33mcommit d9ad2bc89a07b2888cc639705d3424f807d5341d[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Mon Mar 9 23:51:54 2020 +0900
+
+    BeforeActionInterceptor 적용하여 매번 로그인 세션을 불러오는 작업을 간편화
+
+[33mcommit d02e711395f4987afaff0e5bc159f5e71c612005[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Mon Mar 9 22:47:57 2020 +0900
+
+    로그인기능(세션,메인페이지에 아이디 출력)구현,로그아웃시 세션만료
+
+[33mcommit b461ee1cd300a847c7a793a911c953ba6d000740[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Mon Mar 9 18:49:29 2020 +0900
+
+    회원가입 기능 구현(DB테이블작성,유효성검사,라다이렉트)
+
+[33mcommit b100dd21040cfd2d48c37b6ab26aa7cfff9daef5[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Mon Mar 9 17:33:13 2020 +0900
+
+    member model,Dao,Service 추가, 회원가입시 ID 중복체크 기능 구현
+
+[33mcommit 593a13719b0c316a4192ad9ff0a44427befb4c1a[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Sun Mar 8 19:08:12 2020 +0900
+
+    회원가입 폼 구현
+
+[33mcommit 042558efe9e9c0723059a1410f70684b6dedb8eb[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 21:39:37 2020 +0900
+
+    게시물 조회수 기능 추가
+
+[33mcommit c71a38b89af012923c475961421ea45f46fff4f6[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 21:24:23 2020 +0900
+
+    html 상단,하단 중복코드 합치기
+
+[33mcommit fedc492742eef131d768f3d521fa149c1deae738[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 21:08:13 2020 +0900
+
+    게시판 수정기능 구현
+
+[33mcommit 4405de0bd29eb9d5cf40666fbbf9305b43b85634[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 20:07:38 2020 +0900
+
+    common.css 추가
+
+[33mcommit 47b1ed1a3cef7c54cf3be44b39f990fada88bf82[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 19:59:12 2020 +0900
+
+    게시물 삭제 서비스 구현
+
+[33mcommit 52d780e1b3ed33b19269ac09f418dc6e4894a3f0[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 19:06:20 2020 +0900
+
+    상세페이지 보기 구현
+
+[33mcommit 5262d9509ab2723d15e1ad0bd448ee5a870e38a0[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 17:15:41 2020 +0900
+
+    게시물 추가 후 상세페이지로 이동되도록 처리(상세페이지 아직 구현x)
+
+[33mcommit e3303ceb43c5c62b8cef1946e0166b7fce25ee25[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Sat Mar 7 16:36:23 2020 +0900
+
+    게시물리스트에 게시물전체개수 추가
+
+[33mcommit 53f32f87c66344c70b438ccd09c3e225d89ec64c[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Fri Mar 6 22:35:35 2020 +0900
+
+    CUtil 도입
+
+[33mcommit dae2535ed1daa2fa53edc22474418cbb01230c97[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Fri Mar 6 21:55:54 2020 +0900
+
+    doAdd 가 INSERT에 의해 만들어진 id값을 반환하도록 처리
+
+[33mcommit 120eed3c05a1bfafaaae599d9e956b934bfa9147[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Fri Mar 6 19:25:48 2020 +0900
+
+     doAdd(게시물추가) 기능 구현
+
+[33mcommit cb333834e39bb13f43d18ae4b0379ecf4e10cc5c[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Fri Mar 6 18:36:47 2020 +0900
+
+    ArticleDaoImpl 제거하고 마이바티스로 DB에 직접연결, 게시물 생성 기능추가(add.jsp)
+
+[33mcommit 683d2b7c235ac6faddb3eb6aca1961d56b85c0f2[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Fri Mar 6 05:20:09 2020 +0900
+
+    ArticleDao 생성
+
+[33mcommit 37bb87d16d1b895d2eec22724b8f1aacc08b9874[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Fri Mar 6 04:58:37 2020 +0900
+
+    list.jsp 자바버전 제거
+
+[33mcommit a7113cfb99da50ae4f834c446d43e0abda868ba6[m
+Author: khs0806 <55686024+khs0806@users.noreply.github.com>
+Date:   Fri Mar 6 04:56:55 2020 +0900
+
+    게시물 리스트 list.jsp를 자바버전과 EL,JSTL버전으로 출력
+
+[33mcommit 4d695fce74c79135e303edb11f3d2a863b62b6b5[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Thu Mar 5 00:11:30 2020 +0900
+
+    ArticleService, ArticleServiceImpl, ArticleDTO 생성 및 세팅
+
+[33mcommit db091675fdefb15010701a0bba8797724f794435[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Wed Mar 4 18:17:14 2020 +0900
+
+    url "article/list" 매핑시켜 list.jsp 출력
+
+[33mcommit f2da994d61618e6d991673f2dac25e992c16d888[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Wed Mar 4 10:55:22 2020 +0900
+
+    README 추가
+
+[33mcommit e6ef084160af3129766dfb4d8ef61b8e385f93e2[m
+Author: khs0806 <boydsa12@naver.com>
+Date:   Wed Mar 4 00:48:37 2020 +0900
+
+    프로젝트 생성 및 최초 설정 완료

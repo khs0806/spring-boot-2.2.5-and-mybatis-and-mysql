@@ -50,7 +50,7 @@ public class StudyController {
 		pageMaker.setTotalCount(studyService.getTotalCount());
 		model.addAttribute("pageMaker", pageMaker);
 
-		return "study/listTemp";
+		return "study/list";
 	}
 	@RequestMapping("/study/detail")
 	public String showDetail(Model model, long sno, HttpSession session, StudyMemberVO studyMember) {
@@ -64,7 +64,7 @@ public class StudyController {
 		model.addAttribute("study", study);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("isJoin", result);
-		return "study/detailTemp";
+		return "study/detail";
 	}
 
 	@RequestMapping(value="/study/add", method=RequestMethod.GET)

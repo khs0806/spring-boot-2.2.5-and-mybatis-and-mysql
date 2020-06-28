@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.dao.ReplyDao">
+
+	<!-- 댓글 조회 -->
+	<select id="readReply" resultType="ReplyVO">
+    	SELECT
+    		 NO, CONTENT, ID, to_char(REGDATE,'YYYY-MM-DD HH24:MI') as REGDATE
+    	FROM REPLY
+    	WHERE sno = #{sno}
+    	ORDER BY REGDATE
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="writeReply">
+		<selectKey keyProperty="no" order="BEFORE" resultType="int">
+			SELECT coalesce(max(no+1),1) AS no FROM REPLY
+		</selectKey>
+		INSERT INTO REPLY (no, sno, id, content, regdate)
+		values (#{no}, #{sno}, #{id}, #{content}, sysdate)
+	</insert>
+	
+	<!-- 댓글 수정 -->	
+	<update id="updateReply" >
+		UPDATE REPLY SET CONTENT = #{content}
+		WHERE no = #{no}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" >
+		DELETE FROM REPLY
+		WHERE no = #{no}
+	</delete>
+	
+	<!-- 댓글 상세 조회 -->
+	<select id="selectReply" resultType="ReplyVO">
+		SELECT NO
+			  ,SNO
+			  ,ID
+			  ,CONTENT
+			  ,REGDATE	 
+		FROM study
+		WHERE SNO = #{sno}
+	</select>
+	
+</mapper>
