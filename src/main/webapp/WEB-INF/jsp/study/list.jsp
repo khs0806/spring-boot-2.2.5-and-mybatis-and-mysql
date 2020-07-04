@@ -105,9 +105,9 @@ div .search {
 						<td><c:out value="${study.id}" /></td>
 						<td> 
 							<fmt:parseDate value='${study.totime}' var='totime' pattern='yy-MM-dd'/>
-							<fmt:formatDate value="${totime}" pattern="yy-MM-dd" /> 
+							<fmt:formatDate value="${totime}" type="date" /> 
 						     ~ <fmt:parseDate value='${study.fromtime}' var='fromtime' pattern='yy-MM-dd'/>
-						     <fmt:formatDate value="${fromtime}" pattern="yy-MM-dd" />
+						     <fmt:formatDate value="${fromtime}" type="date"/>
 						</td>
 						<td><c:out value="${study.location}" /></td>
 					</tr>

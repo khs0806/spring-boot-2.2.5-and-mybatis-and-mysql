@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-var alertMsg = '${alertMsg}';
-var historyBack = '${historyBack}' == 'true';
-var redirectUrl = '${redirectUrl}';
+	var alertMsg = '${alertMsg}';
+	var historyBack = '${historyBack}' == 'true';
+	var redirectUrl = '${redirectUrl}';
 </script>
 
 <script>

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.dao.MemberDao;
 import com.example.model.MemberVO;
-import com.example.util.CUtil;
 
 
 @Service
@@ -36,6 +35,7 @@ public class MemberServiceImpl implements MemberService{
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("resultCode", resultCode);
 		rs.put("msg", msg);
+		rs.put("count", count);
 		
 		return rs;
 	}

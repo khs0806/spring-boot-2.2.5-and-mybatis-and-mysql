@@ -9,6 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
+<script src="/resource/js/join.js"></script>
 <link rel="stylesheet" href="/resource/css/join.css">
 <link rel="stylesheet" href="/resource/css/bootstrap.css">
 <style>
@@ -16,35 +17,7 @@
 		margin:0 auto;
 	}
 </style>
-<script>
-		function submitJoinForm(form) {
-			form.id.value = form.id.value.trim();
-			if (form.id.value.length == 0) {
-				alert('아이디를 입력해주세요.');
-				form.id.focus();
-				return false;
-			}
-			form.pass.value = form.pass.value.trim();
-			if (form.pass.value.length == 0) {
-				alert('패스워드를 입력해주세요.');
-				form.pass.focus();
-				return false;
-			}
-			form.passConfirm.value = form.passConfirm.value.trim();
-			if (form.passConfirm.value.length == 0) {
-				alert('패스워드 확인을  입력해주세요.');
-				form.passConfirm.focus();
-				return false;
-			}
-			
-			if (form.pass.value != form.passConfirm.value) {
-				alert('비밀번호가 서로 일치하지 않습니다.');
-				form.passConfirm.focus();
-				return false;
-			}
-			form.submit();
-		}
-	</script>
+
 <title>Hello, world!</title>
 </head>
 <body>
@@ -57,11 +30,13 @@
 		<h3>회원가입</h3><br>
 	</div>
 	<form action="./doJoin" class="joinForm con common-form" method="POST"
-		onsubmit="submitJoinForm(this); return false;">
+		onsubmit="return submitJoinForm(this);" name="joinnForm">
 		<div class="form-group">
 			<label for="userId">아이디</label><input
 				type="text" class="form-control" id="userId" name="id"
 				aria-describedby="userId">
+			<button type="button" class="btn btn-success btn-sm" style="margin-top: 10px;"
+			name="idChk" onclick="idCheck(joinnForm)">ID 중복확인</button>
 		</div>
 		<div class="form-group">
 			<label for="password">비밀번호</label> <input
@@ -80,6 +55,7 @@
 				class="form-control" id="name"
 				aria-describedby="name">
 		</div>
+		<input type="hidden" name="idChkCount" value="1"/>
 		<input type="submit" value="가입하기" class="btn btn-primary button"/>
 		<input type="reset" value="취소" class="btn btn-primary button" onclick="history.back();"/>
 	</form>
