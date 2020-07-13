@@ -39,7 +39,8 @@ public class StudyController {
 	
 	@Autowired
 	PageMaker pageMaker;
-
+	
+	// 스터디 목록 가져오기
 	@RequestMapping("/study/list")
 	public String showList(Model model, Criteria cri) {
 		List<StudyVO> list = studyService.getList(cri);
@@ -52,6 +53,8 @@ public class StudyController {
 
 		return "study/list";
 	}
+	
+	// 스터디 상세보기
 	@RequestMapping("/study/detail")
 	public String showDetail(Model model, long sno, HttpSession session, StudyMemberVO studyMember) {
 		StudyVO study = studyService.getOne(sno);
@@ -67,12 +70,14 @@ public class StudyController {
 		return "study/detail";
 	}
 
+	// 스터디 추가 화면 출력하기
 	@RequestMapping(value="/study/add", method=RequestMethod.GET)
 	public String showAdd() {
 	
 		return "study/add";
 	}
 	
+	// 스터디 추가하기
 	@ResponseBody
 	@RequestMapping(value="/study/doAdd", method=RequestMethod.POST)
 	public String doAdd(StudyVO study) {
@@ -92,6 +97,7 @@ public class StudyController {
 		return sb.toString();
 	}
 	
+	// 스터디 수정화면 출력하기
 	@RequestMapping(value="/study/modify", method=RequestMethod.GET)
 	public String showModify(Model model, long sno) {
 		StudyVO study = studyService.getOne(sno);
@@ -100,6 +106,7 @@ public class StudyController {
 		return "study/modify";
 	}
 
+	// 스터디 수정하기
 	@ResponseBody
 	@RequestMapping(value="/study/doModify", method=RequestMethod.POST)
 	public String doModify(StudyVO study, long sno) {
@@ -136,6 +143,7 @@ public class StudyController {
 		return entity;
 	}
 	
+	// 스터디 삭제하기
 	@ResponseBody
 	@RequestMapping("/study/doDelete")
 	public String doDelete(long sno, HttpSession session) {
@@ -158,6 +166,7 @@ public class StudyController {
 		return sb.toString();
 	}
 	
+	// 스터디 회원 추방하기
 	@ResponseBody
 	@RequestMapping(value="/study/kickout", method=RequestMethod.POST)
 	public String kickOut(long sno, String kickedId, HttpSession session) {
@@ -174,6 +183,7 @@ public class StudyController {
 		return response;
 	}
 	
+	// 스터디 탈퇴하기
 	@ResponseBody
 	@RequestMapping(value="/study/groupout", method=RequestMethod.POST)
 	public String groupOut(long sno, HttpSession session) {
@@ -184,6 +194,7 @@ public class StudyController {
 		return result;
 	}
 	
+	// 포인트 부여화면 출력하기
 	@RequestMapping(value="/study/pointview", method=RequestMethod.GET)
 	public String pointView(long sno, StudyMemberVO member, Model model, HttpSession session) {
 		
@@ -208,6 +219,7 @@ public class StudyController {
 		return "study/pointUp";
 	}
 	
+	// 포인트 부여
 	@ResponseBody
 	@RequestMapping(value="/study/pointup", method=RequestMethod.POST)
 	public String pointUp(PointVO point, String id, long sno) {
@@ -226,6 +238,7 @@ public class StudyController {
 		
 		return sb.toString();
 	}
+	// 나의 스터디 목록 보기
 	@RequestMapping("/study/mystatus")
 	public String myStudyStatus(HttpSession session, Model model) {
 		
@@ -236,6 +249,7 @@ public class StudyController {
 		
 		return "study/myStudyView";
 	}
+	// 나의 스터디 포인트 보기
 	@RequestMapping("/study/mypoint")
 	public String myPointStatus(long sno, HttpSession session, Model model) {
 		

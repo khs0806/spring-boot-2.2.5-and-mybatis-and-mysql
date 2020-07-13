@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.dao.MemberDao;
 import com.example.model.MemberVO;
+import com.example.util.CUtil;
 
 
 @Service
@@ -42,11 +43,10 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public Map<String, Object> join(Map<String, Object> param) {
-		memberDao.join(param);
+		long newId = memberDao.join(param);
 
 		System.out.println(param.toString());
 //		long newId = CUtil.getAsLong(param.get("id"));
-		long newId = 1;
 		String resultCode = "";
 		String msg = "";
 

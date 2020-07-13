@@ -31,11 +31,7 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping("/member/login")
-	public String showLogin() {
-		return "member/login";
-	}
-
+	// 로그아웃
 	@RequestMapping("/member/doLogout")
 	public String doLogout(HttpSession session) {
 		session.removeAttribute("loginedMemberId");
@@ -43,33 +39,13 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	// (구)로그인 기능
-//	@RequestMapping("/member/doLogin")
-//	public String doLogin(@RequestParam Map<String, Object> param, Model model, HttpSession session) {
-//		//로그인 아이디 비밀번호가 일치하는지 체크
-//		MemberVO matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
-//				(String) param.get("loginPw"));
-//		
-//		if (matchedMember == null) {
-//			model.addAttribute("alertMsg", "아이디나 비밀번호를 다시 확인해주세요들송!");
-//			model.addAttribute("historyBack", true);
-//			return "common/redirect";
-//		}
-//		session.setAttribute("loginedMemberId", matchedMember.getId());
-//		
-//		model.addAttribute("alertMsg", "로그인 되었습니다.");
-//		model.addAttribute("redirectUrl", "/");
-//		
-//		return "common/redirect";
-//	}
-	
-	// 로그인 기능, ajax방식으로 소통하여 아이디 비밀번호 틀리면 문자열 전달
+	// 로그인 기능, ajax방식
 	@ResponseBody
 	@RequestMapping(value="/member/doLogin", method=RequestMethod.POST)
-	public ResponseEntity<String> doTestLogin(@RequestBody Map<String, Object> param, Model model, HttpSession session) {
+	public ResponseEntity<String> doLogin(@RequestBody Map<String, Object> param, Model model, HttpSession session) {
+		
 		//로그인 아이디 비밀번호가 일치하는지 체크
 		ResponseEntity<String> entity = null;
-		System.out.println((String) param.get("loginId") + "=========================== " + (String) param.get("loginPw"));
 		MemberVO matchedMember = memberService.getMatchedOne((String) param.get("loginId"),
 				(String) param.get("loginPw"));
 		
@@ -93,23 +69,17 @@ public class MemberController {
 		return entity;
 	}
 	
+	// 회원가입 페이지 출력
 	@RequestMapping("/member/join")
 	public String showJoin() {
 		
 		return "member/join";
 	}
 	
+	// 회원가입 기능
 	@RequestMapping("/member/doJoin")
 	public String doJoin(@RequestParam Map<String,Object> param, Model model) {
 		System.out.println("param"+param.toString());
-//		Map<String,Object> checkLoginIdDupRs = memberService.checkLoginIdDup((String)param.get("id"));
-		
-		// 로그인 ID의 중복성 체크
-//		if (((String)checkLoginIdDupRs.get("resultCode")).startsWith("F-")) {
-//			model.addAttribute("alertMsg", checkLoginIdDupRs.get("msg"));
-//			model.addAttribute("historyBack", true);
-//			return "common/redirect";
-//		}
 		
 		Map<String, Object> joinRs = memberService.join(param);
 		

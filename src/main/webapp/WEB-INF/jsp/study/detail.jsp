@@ -165,10 +165,12 @@ body {
 			<div>
 				<input type="text" id="replytext">
 			</div>
-			<div>
-				<button type="button" id="replyModBtn">수정</button>
-				<button type="button" id="closeBtn">닫기</button>
-			</div>
+			<c:if test="">
+				<div>
+					<button type="button" id="replyModBtn">수정</button>
+					<button type="button" id="closeBtn">닫기</button>
+				</div>
+			</c:if>
 		</div>
 	</section>
 	<hr />
@@ -286,9 +288,12 @@ function getAllList(){
 		    	    +this.id+"</strong>"; 
 		        str +="<small class='pull-right text-muted'>"
 		            +this.regdate+"</small></div>";
-		        str +="<p>"+this.content+"</p></div>"
-		       		+"<div class='replyMod'><button class='btn btn-primary' id='replyMod'>수정</button>"
-		       		+"<button class='btn btn-primary' id='replyDelBtn'>삭제</button></div></li>";
+		        str +="<p>"+this.content+"</p></div>";
+		        if ('${loginedMemberId}' == this.id){
+		       	str	+="<div class='replyMod'><button class='btn btn-primary' id='replyMod'>수정</button>"
+		       		+"<button class='btn btn-primary' id='replyDelBtn'>삭제</button></div>";
+		        }
+		        str +="</li>";
 			});
 		$(".chat").html(str);
 	});
@@ -316,7 +321,6 @@ function replyAdd(){
 			}),
 			success:function(result){
 				if (result=='SUCCESS'){
-					alert("등록되었습니다.");
 					getAllList();
 				}
 			},
@@ -345,7 +349,6 @@ function replyUpdate(){
 			success:function(result){
 				console.log("result: " + result)
 				if (result=='SUCCESS'){
-					alert("수정 되었습니다.");
 					$("#modDiv").hide("slow");
 					getAllList();
 				}
