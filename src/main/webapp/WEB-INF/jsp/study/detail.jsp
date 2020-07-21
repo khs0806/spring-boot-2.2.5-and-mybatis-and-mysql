@@ -32,7 +32,42 @@ body {
 	display:none;
 }
 </style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2992107a6cdd4a70cae5c448140c5fd1"></script>
+<script>
+// Kakao MAP API 이용하기
+$(document).ready(function(){
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(${study.lat}, ${study.lng}), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
 
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+
+	// 마커가 표시될 위치입니다 
+	var markerPosition  = new kakao.maps.LatLng(${study.lat}, ${study.lng}); 
+
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+	    position: markerPosition
+	});
+
+	// 마커가 지도 위에 표시되도록 설정합니다
+	marker.setMap(map);
+
+	var iwContent = '<div style="padding:5px;">${study.location} <br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	    iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
+
+	// 인포윈도우를 생성합니다
+	var infowindow = new kakao.maps.InfoWindow({
+	    position : iwPosition, 
+	    content : iwContent 
+	});
+	  
+	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+	infowindow.open(map, marker);
+});
+</script>
 <div class="container">
 	<hr />
 	<section id="container">
@@ -81,8 +116,17 @@ body {
 					value=" ${study.joincode}" readonly="readonly" />
 			</div>
 		</c:if>
+		<div class="form-group">
+			<label for="regdate" class="col-sm-2 control-label">스터디 장소</label>
+			<input type="text" id="mapp" name="writer" class="form-control"
+				value="${study.location}" readonly="readonly" />
+			<div id="map" style="width:100%;height:350px;"></div>
+		</div>
+		
+		<!-- Ajax로 댓글처리 -->
 		<ul id="replies">
 		</ul>
+		
 		<hr>
 		<div class="boardlist mb-4">
 			<a href="./list"><button class="list_btn btn btn-primary btn-xl">목록</button></a>
@@ -187,6 +231,7 @@ $(document).ready(function(){
 	replyModalView();
 	replyModalClose();
 });
+
 function joinGroup() {
     $('.joinGroup').on('click', function () {
     	 var joincode = prompt('가입코드를 입력하세요.');
@@ -212,6 +257,7 @@ function joinGroup() {
     	 }
     });
 }
+
 function kickOut() {
     $('.kickOut').on('click', function () {
     	 var kickedId = prompt('추방시킬 ID를 입력하세요');
@@ -244,6 +290,7 @@ function kickOut() {
     	 }
     });
 }
+
 function groupOutFunc(){
 	var check = false;
 	$('.groupOut').on('click', function () {

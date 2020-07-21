@@ -27,13 +27,13 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
+		
 		log.info(" Request URI :" + request.getRequestURI());
-			
+		
 		boolean isLogined = false;
 		String loginedMemberId = null;
 		MemberVO loginedMember = null;
-
+		
 		HttpSession session = request.getSession();
 		if ( session.getAttribute("loginedMemberId") != null ) {
 			isLogined = true;
@@ -44,7 +44,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		request.setAttribute("isLogined", isLogined);
 		request.setAttribute("loginedMemberId", loginedMemberId);
 		request.setAttribute("loginedMember", loginedMember);
-
+		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 }

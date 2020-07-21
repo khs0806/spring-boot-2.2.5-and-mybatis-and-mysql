@@ -81,6 +81,7 @@ public class StudyController {
 	@ResponseBody
 	@RequestMapping(value="/study/doAdd", method=RequestMethod.POST)
 	public String doAdd(StudyVO study) {
+		System.out.println(study.toString());
 		StudyMemberVO member = studyService.add(study);
 		String id = member.getId();
 		long sno = member.getSno();

@@ -5,14 +5,14 @@
 	<select id="getList" resultType="studyVO">
 		SELECT  sno, id, sname, 
 				content, mname, location, totime, 
-				fromtime, sdate, joincode
+				fromtime, sdate, joincode, lat, lng
 		 FROM ( 
 		        SELECT  sno, id, sname, 
 						content, mname, location, 
 						to_char(totime,'YY-MM-DD') as totime, 
 						to_char(fromtime,'YY-MM-DD') as fromtime, 
 						to_char(sdate,'hh24:mi') as sdate, 
-						joincode, 
+						joincode, lat, lng,
 		                ROW_NUMBER() OVER(ORDER BY sno DESC) AS RNUM
 		         FROM study
 		       ) 
@@ -46,7 +46,7 @@
 				to_char(totime,'YYYY-MM-DD (dy)') as totime, 
 				to_char(fromtime,'YYYY-MM-DD (dy)') as fromtime, 
 				to_char(sdate,'hh24:mi') as sdate, 
-				joincode
+				joincode, lat, lng
 		FROM study
 		WHERE sno = #{sno}
 	</select>
@@ -61,9 +61,9 @@
 		<selectKey keyProperty="sno" order="BEFORE" resultType="int">
 			select coalesce(max(sno+1),1) as sno from study
 		</selectKey>
-		insert into study (sno, id, sname, content, mname, location, totime, fromtime, sdate, joincode)
+		insert into study (sno, id, sname, content, mname, location, totime, fromtime, sdate, joincode, lat, lng)
 		values 
-		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, to_date(#{sdate}, 'HH24:MI'), #{joincode})
+		(#{sno}, #{id}, #{sname}, #{content}, #{mname}, #{location}, #{totime}, #{fromtime}, to_date(#{sdate}, 'HH24:MI'), #{joincode}, #{lat}, #{lng})
 	</insert>
 	
 	<select id="getStudyNo" resultType="int">
@@ -96,7 +96,9 @@
 			location = #{location},
 			totime = #{totime},
 			fromtime = #{fromtime},
-			sdate = to_date(#{sdate}, 'HH24:MI')
+			sdate = to_date(#{sdate}, 'HH24:MI'),
+			lat = #{lat},
+			lng = #{lng}
 		WHERE id = #{id} AND joincode = #{joincode}
 	</update>
 	

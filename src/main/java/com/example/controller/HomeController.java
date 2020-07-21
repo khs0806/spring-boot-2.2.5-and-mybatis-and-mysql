@@ -27,7 +27,8 @@ public class HomeController {
 	public String showMain(Model model) {
 		
 		// 접속자 아이피 확인.
-		HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpServletRequest req = 
+				((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		String ip = req.getRemoteAddr();
 		System.out.println(ip);
 		return "home/main";

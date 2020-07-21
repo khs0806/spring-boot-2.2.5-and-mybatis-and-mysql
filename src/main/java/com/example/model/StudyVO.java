@@ -19,4 +19,6 @@ public class StudyVO{
 	private String fromtime;
 	private String sdate;
 	private String joincode;
+	private String lat;
+	private String lng;
 }
