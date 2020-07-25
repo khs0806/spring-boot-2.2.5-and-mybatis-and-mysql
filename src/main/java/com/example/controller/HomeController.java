@@ -3,7 +3,10 @@ package com.example.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,9 +49,16 @@ public class HomeController {
 		return "home/main";
 	}
 	
+	@RequestMapping("/devlogview")
+	public String devlogView() {
+		
+		return "study/devlog";
+	}
+	
+	// Date 타입으로 넘어올때
 	@ResponseBody
 	@RequestMapping("/devlog")
-	public String listTemp(@RequestParam(required = false) 
+	public String devLog(@RequestParam(required = false) 
 						  @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
 		
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyMMdd");
@@ -62,10 +72,26 @@ public class HomeController {
 		
 		return str;
 	}
-
-	@RequestMapping("/devlogview")
-	public String devlogView() {
+	
+	@RequestMapping("/devlogsearch")
+	public String devLogSearch(String data, Model model) {
 		
-		return "study/devlog";
+		long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+        
+		//실험할 코드 추가
+		List<Map<String, String>> devlogList = devlogService.devlogSearch(data);
+		
+		long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+		long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
+		System.out.println("시간차이(m) : "+secDiffTime);
+		
+		System.out.println(devlogList);
+		System.out.println(devlogList.size());
+		
+		model.addAttribute("devlogList", devlogList);
+		
+		return "study/devlogList";
 	}
+
+	
 }
