@@ -53,8 +53,12 @@ public class HomeController {
 		
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyMMdd");
 		String datee = transFormat.format(date);
+		System.out.println("datee "+datee);
+		String str = devlogService.devlog(datee);
 		
-		String str = devlogService.devlog(datee); 
+		if(str == null) {
+			return "파일이 없습니다.";
+		}
 		
 		return str;
 	}
