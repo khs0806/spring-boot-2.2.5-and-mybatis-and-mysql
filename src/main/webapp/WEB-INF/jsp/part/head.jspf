@@ -16,22 +16,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/resource/js/bootstrap.js"></script>
+
 <script>
 $(document).ready(function(){
 	doLogin();
+	$('#myModal').on('shown.bs.modal', function (e) {
+		console.log("hidden.bs.modal");
+	});
+	$('#myModal').on('hide.bs.modal', function (e) {
+		console.log("hide.bs.modal");
+		$(".loginId").val("");
+		$(".loginChk").empty();
+	});
 });
+
+
+
 function doLogin() {
-	$(".login-btn").on("click", function(){
-		var str='';
+	$(".login-btn").click(function(){
 		var id = $(".loginId").val();
 		var password = $(".loginPw").val();
-		console.log(id,password);
+		
 		$.ajax({
 			type:'post',
 			url:'/member/doLogin',
 			headers:{
 				"Content-Type":"application/json",
-				"X-HTTP-Method-Override":"POST"
 			},
 			dataType:'text',
 			data : JSON.stringify({
@@ -42,8 +53,9 @@ function doLogin() {
 				if (result=='SUCCESS'){
 					location.href = "/";
 				} else {
-					str += "<span style='color:red;'>"+result+"</span>";
+					var str = "<span style='color:red;'>"+result+"</span>";
 					$(".loginChk").html(str);
+					$(".loginPw").val("");
 				}
 			},
 			error:function(request,status,error){
@@ -52,7 +64,6 @@ function doLogin() {
 		});
 	});
 }
-
 </script>
 </head>
 <body>
